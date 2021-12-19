@@ -3,8 +3,9 @@
 
 
 int main(){
-    printf("DO YOUR BEST!!!!");
-    printf("Testttt");
-    printf("testt");
+    printf("DO YOUR BEST!!!!\n");
+    printf("Testttt\n");
+    printf("testt\n");
+    printf("hi from here , it is working !!");
     return 0;
 }
