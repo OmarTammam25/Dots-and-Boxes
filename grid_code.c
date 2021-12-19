@@ -31,7 +31,7 @@ int main(){
 //and having one value of the 3 (' ' , hor , ver)
 
 //example:
-
+/*
     char data[49]={' ',hor,hor,hor,hor,ver,ver,ver,ver,ver,ver,
                    hor,hor,hor,hor,hor,ver,' ',ver,ver,ver,ver,
                    hor,hor,hor,hor,hor,ver,ver,ver,ver,ver,ver,
@@ -39,5 +39,5 @@ int main(){
                    hor,hor,hor,hor,hor};
 
     change_grid(5,6,data);
-    
+    */
 }
