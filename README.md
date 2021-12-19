@@ -1,11 +1,11 @@
 # Dots and lines
- repo for 1st term final project  
  
+## team
  Omar Tammam  
  Joseph Shokry  
  
 ## Project info
-
+ repo for 1st term final project  
 ## to do : 
  1- grid for 3*3 dots  
  2- data stracture  
