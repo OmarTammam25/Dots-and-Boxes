@@ -25,19 +25,18 @@ void change_grid(int n,int m ,char data[]){
     }
 }
 
-
+/*
 int main(){
 // the data must be in one dimension form of size (2*m*n - m - n)
 //and having one value of the 3 (' ' , hor , ver)
 
 //example:
-/*
+
     char data[49]={' ',hor,hor,hor,hor,ver,ver,ver,ver,ver,ver,
                    hor,hor,hor,hor,hor,ver,' ',ver,ver,ver,ver,
                    hor,hor,hor,hor,hor,ver,ver,ver,ver,ver,ver,
                    hor,' ',hor,hor,hor,' ',ver,ver,ver,ver,ver,
                    hor,hor,hor,hor,hor};
-
     change_grid(5,6,data);
-    */
-}
+    
+}*/

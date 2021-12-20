@@ -9,13 +9,13 @@
         ""
       ],
       "stopAtEntry": false,
-      "cwd": "d:/programing/projects/Dots-and-lines",
+      "cwd": "d:/programing/projects/Dots-and-lines/grid fils",
       "environment": [],
-      "program": "d:/programing/projects/Dots-and-lines/build/Debug/outDebug",
+      "program": "d:/programing/projects/Dots-and-lines/grid fils/build/Debug/outDebug",
       "internalConsoleOptions": "openOnSessionStart",
       "MIMode": "gdb",
       "miDebuggerPath": "C:/Program Files/CodeBlocks/MinGW/bin/gdb.exe",
-      "externalConsole": true,
+      "externalConsole": false,
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
