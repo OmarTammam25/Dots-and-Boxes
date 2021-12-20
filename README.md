@@ -7,15 +7,17 @@
 ## Project info
  repo for 1st term final project  
 ## to do : 
- 1- grid for 3*3 dots  
- 2- data stracture  
- 3- check function  
+ 1- check function  
+ 2-  
+ 3- user input method  
+ 4- game setup (size of gride , 2 players or one , choosing colors) json  
+ 5- dinamic data structure  
 
 ## un done :
  1- size of font to display the grid  
- 2- user input method  
+ 2-  
  3- config file for new users (get user name )  
- 4- game setup (size of gride , 2 players or one , choosing colors)  
+ 4-    
  5- main menu (load , start new game , top ten players , exit)  
  6- bot player  
  7- undo , redo , save   
@@ -30,6 +32,7 @@
 
 
 ## done:
- 1-  
-
-
+ 1- data stracture
+ 2- flatten fun
+ 3- grid for dinamic dots
+ 4-
