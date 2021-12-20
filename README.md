@@ -8,10 +8,10 @@
  repo for 1st term final project  
 ## to do : 
  1- check function  
- 2- 
- 3- user input method 
- 4- game setup (size of gride , 2 players or one , choosing colors) json 
- 5- dinamic data structure
+ 2-  
+ 3- user input method  
+ 4- game setup (size of gride , 2 players or one , choosing colors) json  
+ 5- dinamic data structure  
 
 ## un done :
  1- size of font to display the grid  
