@@ -31,6 +31,8 @@ void addLineToArray(int rows, int cols, int lineArray[][COLS], int lineNum){
 //TODO make it a header file and put it in main :)
 
 // this main is just to test the code.
+
+/*
 int main(){
 
     // store which line has been drawn till now. for 2*2 board
@@ -47,3 +49,4 @@ int main(){
     addLineToArray(ROWS,COLS,lineArray,lineNum);
     return 0;
 }
+*/
