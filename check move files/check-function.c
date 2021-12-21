@@ -66,6 +66,7 @@ int check_squares(int i , int j , int n , int m , int data[n][m]){
 }
 /*
 int main(){
+    //example:
     int data[5][5] = {
         {2,1,2,1,2},
         {1,2,1,2,1},
