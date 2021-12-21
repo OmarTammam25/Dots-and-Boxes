@@ -36,3 +36,7 @@
  2- flatten fun
  3- grid for dinamic dots
  4-
+<<<<<<< HEAD
+=======
+
+>>>>>>> the-grid
