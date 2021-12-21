@@ -1,14 +1,6 @@
 #include <stdio.h>
 #include <Windows.h>
 
-
-void main_page(){}
-void game_conf(){}
-void load_page(){}
-void top_ten(){}
-
-
-
 int main(){
 // initializing the game
     system("cls");
@@ -19,6 +11,7 @@ int main(){
     int num_row = 0; //number of dots in each colomn
     int num_col = 0; //number of dots in each row
     int plyers_num=0;
+    
     
     char main_menu [4][40]= {"1- Start a new game","2- Load a game","3- Top ten players","4- Exit"};
     //char conf_menu[3][40] = {"size of grid","one or two players","players configuration"};
@@ -142,7 +135,12 @@ int main(){
                 goto players_number;
         
         }
-
+    /*
+    block of code to ask for user name and user color 
+    if one user or two users
+    add user name to user file and wait for his score if it is his first time with the game
+    update the score of the user if it is higher than his last high score
+    */
 
 
 
