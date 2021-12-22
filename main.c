@@ -89,10 +89,17 @@ int main(){
                 num_col = 6;
                 choice=0;
                 break;
-        /* case 5:
+             case 5:
                 //custom input 
                 //take care if the user enterd an invalid input
-                break;*/
+                /*
+                do{
+                    num_row =0;
+                    printf("enter a valid num between 1-10");
+                    scanf("%d", &num_row);
+                }while(num_row > 10 || num_row <1);*/
+                break;
+
             case 6:
                 //go to the main page
                 system("cls"); 
@@ -141,9 +148,6 @@ int main(){
     add user name to user file and wait for his score if it is his first time with the game
     update the score of the user if it is higher than his last high score
     */
-
-
-
 
 
     return 0;
