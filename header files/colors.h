@@ -4,7 +4,7 @@ void setColor(WORD x){
 							 FOREGROUND_GREEN |
 							 FOREGROUND_BLUE |
 							 FOREGROUND_INTENSITY;
-    SetConsoleTextAttribute(output_handle,x|FOREGROUND_INTENSITY);
+    SetConsoleTextAttribute(output_handle,x);
 }
 
 void setColorDefault(){
