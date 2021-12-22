@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <Windows.h>
 #include "header files\colors.h"
-#include "header files\player_info.h"
+#include "header files\lines array.h"
+
+
 #define MAX_NAME 10
 
 int main(){
@@ -114,7 +116,7 @@ int main(){
         system("cls");
         printf("\t\t\t\tgame configuration\n");
         choice=0;
-        printf("\t\t\t\tnumber of players\n");//one or two players
+        printf("\t\t\t\tnumber of players\n"); //one or two players
 
         for(int j=0;j<3;j++){
             printf("%s\n",one_two[j]);
@@ -153,6 +155,7 @@ int main(){
             WORD colorF;
             WORD colorB;
             char name[MAX_NAME+1];
+            int numOfMoves;
         }player;
         player player1;
         player player2;
@@ -170,13 +173,13 @@ int main(){
         scanf("%d", &choice);
         switch(choice){
             case 1:
-                player1.colorF =FOREGROUND_RED;
+                player1.colorF = FOREGROUND_RED;
                 player1.colorB = BACKGROUND_RED;
-                player2.colorF =FOREGROUND_BLUE;
+                player2.colorF = FOREGROUND_BLUE;
                 player2.colorB = BACKGROUND_BLUE;
                 break;
             case 2:
-                player1.colorF =FOREGROUND_BLUE;
+                player1.colorF = FOREGROUND_BLUE;
                 player1.colorB = BACKGROUND_BLUE;
                 player2.colorF = FOREGROUND_RED;
                 player2.colorB = BACKGROUND_RED;
@@ -190,7 +193,24 @@ int main(){
         printf("     \n     ");
         setColorDefault(); */
 
-        // main game loop:
+        //main game loop:
+        int turn, numOfMove, totalNumberOfLines;
+        int gridArray[num_row + num_row -1][num_col+num_col -1];
+        /*
+            1/ print grid
+            2/ ask user for where to place the line
+            3/ check if its a square
+            4/ print new grid
+            5/ update variables(score, time, players turn, number of moves for each player, number of remaining line)
+            6/ player 2 turn loop again untill no more zeroes in gridArray
+        */
+       while(1){
+           generateGridArray(num_row,num_col,gridArray);
+            
+
+            system("pause");
+       }
+
 
 
     return 0;
