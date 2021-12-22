@@ -1,5 +1,9 @@
 #include <stdio.h>
 #include <Windows.h>
+#include <ctype.h>
+#include "header files/colors.h"
+#include "header files/lines array.h"
+#include "header files/grid_code.h"
 
 #define MAX_NAME 10
 
@@ -192,13 +196,12 @@ int main(){
     setColorDefault(); */
 
     //main game loop:
-    /*
+    
     int turn, numOfMove, totalNumberOfLines;
     int rowGridArray = num_row + num_row -1;
     int colGridArray = num_col + num_col -1;
     int gridArray[rowGridArray][colGridArray];
-    int flatArray[ (num_row-1) * num_col + (num_col-1)* num_row ];
-    */
+    int flatArray[2* num_row*num_col - num_row - num_col];
     /*
         1/ print grid
         2/ ask user for where to place the line
@@ -208,7 +211,7 @@ int main(){
         6/ player 2 turn loop again untill no more zeroes in gridArray
     */
 
-    /*
+    
     while(1){
         generateGridArray(num_row,num_col,gridArray);
         flatten(rowGridArray,colGridArray,gridArray,flatArray);
@@ -216,7 +219,6 @@ int main(){
         system("pause");
     }
 
-    */
 
 
     return 0;
