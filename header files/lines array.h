@@ -26,7 +26,8 @@ void generateGridArray(int n, int m, int gridArray[n+n-1][m+m-1]){
 
 // enter row1 as first row is 1
 // enter col1 as first col is 1
-void addLineToArray(int n, int m, int gridArray[n+n-1][m+m-1],int row1, int row2, int col1, int col2,int turn){
+void addLineToArray(int n, int m, int gridArray[n+n-1][m+m-1],int row1, int row2, int col1, int col2,int turn)
+{
 
     if(row1 == row2){
         int col3;
@@ -49,20 +50,19 @@ void addLineToArray(int n, int m, int gridArray[n+n-1][m+m-1],int row1, int row2
         }
     }
 }
-//TODO make it a header file and put it in main :)
-    
-}
 
 // this main is just to test the code.
+
+/*
  int main(){
-    /*
+    
     int lineArray[ROWS][COLS] = {
         {2,0,2,0,2},
         {0,2,0,2,0},
         {2,0,2,0,2},
         {0,2,0,2,0},
         {2,0,2,0,2}
-    };*/ // the 2 represents the Xs.
+    }; // the 2 represents the Xs.
 
     printf("enter grid size nxm");
     int n,m;
@@ -77,4 +77,4 @@ void addLineToArray(int n, int m, int gridArray[n+n-1][m+m-1],int row1, int row2
 
     addLineToArray(n,m,gridArray,row1,row2,col1,col2);
     return 0;
-} 
+}*/
