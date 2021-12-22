@@ -206,7 +206,11 @@ int main(){
         */
        while(1){
            generateGridArray(num_row,num_col,gridArray);
+<<<<<<< Updated upstream
             
+=======
+
+>>>>>>> Stashed changes
 
             system("pause");
        }
