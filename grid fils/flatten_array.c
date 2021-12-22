@@ -31,7 +31,7 @@ void flatten(int n ,int m,int arr[n][m],char flat_data[]){
         }
     }
 }
-/*
+
 int main(){ 
     // example:
 
@@ -47,4 +47,4 @@ int main(){
         printf("%c,",flat_data[i]);
     }
     return 0;
-}*/
+}

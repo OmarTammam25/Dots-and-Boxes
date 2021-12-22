@@ -1,7 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <Windows.h>
 #include "header files\colors.h"
 #include "header files\lines array.h"
+#include "header files\flatten_array.h"
+
 
 
 #define MAX_NAME 10
@@ -38,7 +41,7 @@ int main(){
             case 1:
                 system("cls");
                 printf("\t\t\t\tStart a new game");
-                goto game_conf; // take him to game configration page
+                //goto game_conf; // take him to game configration page
                 choice=0;
                 break;
             case 2:
@@ -195,7 +198,10 @@ int main(){
 
         //main game loop:
         int turn, numOfMove, totalNumberOfLines;
-        int gridArray[num_row + num_row -1][num_col+num_col -1];
+        int rowGridArray = num_row + num_row -1;
+        int colGridArray = num_col + num_col -1;
+        int gridArray[rowGridArray][colGridArray];
+        int flatArray[ (num_row-1) * num_col + (num_col-1)* num_row ];
         /*
             1/ print grid
             2/ ask user for where to place the line
@@ -205,8 +211,9 @@ int main(){
             6/ player 2 turn loop again untill no more zeroes in gridArray
         */
        while(1){
-           generateGridArray(num_row,num_col,gridArray);
-
+            generateGridArray(num_row,num_col,gridArray);
+            flatten(rowGridArray,colGridArray,gridArray,flatArray);
+            change_grid(rowGridArray,colGridArray, flatArray, player1.colorF, player2.colorF);
             system("pause");
        }
 
