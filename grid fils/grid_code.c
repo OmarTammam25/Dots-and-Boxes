@@ -80,7 +80,7 @@ void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2){
 }
 
 
-
+/*
 int main(){
 // the data must be in one dimension form of size (2*m*n - m - n)
 //and having one value of the 3 (' ' , hor , ver)
@@ -88,27 +88,32 @@ int main(){
 //example:
 
     
-int data[5][5]={{2,-1,2,-1,2},
-                {1,2,1,2,1},
-                {2,1,2,1,2},
-                {1,2,1,2,1},
-                {2,1,2,1,2}};
-    int flat_data[12];//number of lines
-    flatten(5,5,data,flat_data); //size od data structure
-    for (int i = 0; i < 12 ; i++)
+int data[9][9]={{2,-1,2,0,2,-1,2,-1,2},
+                {1,2,1,2,1,2,1,2,1},
+                {2,1,2,1,2,1,2,1,2},
+                {1,2,0,2,0,2,1,2,1},
+                {2,1,2,-1,2,-1,2,1,2},
+                {-1,2,0,2,1,2,1,2,1},
+                {2,1,2,-1,2,1,2,1,2},
+                {1,2,-1,2,1,2,1,2,1},
+                {2,1,2,-1,2,1,2,1,2}};
+    int flat_data[40];//number of lines
+    flatten(9,9,data,flat_data); //size of data structure
+    for (int i = 0; i < 40 ; i++)
     {
         printf("%c,",flat_data[i]);
     }
 
     printf("\n");
-    /*
-    int data[49]={' ',hor,hor,hor,hor,ver,ver,ver,ver,ver,ver,
-                   hor,-hor,hor,hor,hor,-ver,' ',ver,-ver,ver,ver,
-                   hor,hor,hor,hor,hor,ver,ver,ver,-ver,ver,ver,
-                   hor,' ',hor,hor,-hor,' ',ver,ver,ver,ver,ver,
-                   hor,hor,hor,hor,hor};*/
-    change_grid(3,3,flat_data,FOREGROUND_RED,FOREGROUND_BLUE);//number od dots
+    
+    //int data[49]={' ',hor,hor,hor,hor,ver,ver,ver,ver,ver,ver,
+    //               hor,-hor,hor,hor,hor,-ver,' ',ver,-ver,ver,ver,
+    //               hor,hor,hor,hor,hor,ver,ver,ver,-ver,ver,ver,
+    //               hor,' ',hor,hor,-hor,' ',ver,ver,ver,ver,ver,
+    //               hor,hor,hor,hor,hor};
+                   
+    change_grid(5,5,flat_data,FOREGROUND_RED,FOREGROUND_BLUE);//number of dots
     system("pause");
     return 0;
     
-}
+}*/

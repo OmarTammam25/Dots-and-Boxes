@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <Windows.h>
-#include "header files\colors.h"
-#include "header files\player_info.h"
+
 #define MAX_NAME 10
 
 int main(){
@@ -148,23 +147,24 @@ int main(){
     update the score of the user if it is higher than his last high score
     */
 
-        typedef struct{
-            int score;
-            WORD colorF;
-            WORD colorB;
-            char name[MAX_NAME+1];
-        }player;
-        player player1;
-        player player2;
-        choice = 0;
+    typedef struct{
+        int score;
+        WORD colorF;
+        WORD colorB;
+        char name[MAX_NAME+1];
+    }player;
+    player player1;
+    player player2;
+    choice = 0;
 
-        system("cls");
-        printf("\t\t\t\tPlayers information\n");
-        /* printf("Please enter your player 1 name: ");
-        scanf("") */ // TODO GET PLAYER NAME
-        printf("Please enter player 1 prefered color:\n");
-        printf("1.Red\n");
-        printf("2.Blue\n");
+    system("cls");
+    printf("\t\t\t\tPlayers information\n");
+    /* printf("Please enter your player 1 name: ");
+    scanf("") */ // TODO GET PLAYER NAME
+    printf("Please enter player 1 prefered color:\n");
+    printf("1.Red\n");
+    printf("2.Blue\n");
+
 
     color_choice:
         scanf("%d", &choice);
@@ -186,12 +186,37 @@ int main(){
                 goto color_choice;
         }
 
-        /* setColor(player1.colorB);
-        printf("     \n     ");
-        setColorDefault(); */
+    /* example of setting color of the user
+    setColor(player1.colorB);
+    printf("     \n     ");
+    setColorDefault(); */
 
-        //main game loop:
+    //main game loop:
+    /*
+    int turn, numOfMove, totalNumberOfLines;
+    int rowGridArray = num_row + num_row -1;
+    int colGridArray = num_col + num_col -1;
+    int gridArray[rowGridArray][colGridArray];
+    int flatArray[ (num_row-1) * num_col + (num_col-1)* num_row ];
+    */
+    /*
+        1/ print grid
+        2/ ask user for where to place the line
+        3/ check if its a square
+        4/ print new grid
+        5/ update variables(score, time, players turn, number of moves for each player, number of remaining line)
+        6/ player 2 turn loop again untill no more zeroes in gridArray
+    */
 
+    /*
+    while(1){
+        generateGridArray(num_row,num_col,gridArray);
+        flatten(rowGridArray,colGridArray,gridArray,flatArray);
+        change_grid(rowGridArray,colGridArray, flatArray, player1.colorF, player2.colorF);
+        system("pause");
+    }
+
+    */
 
 
     return 0;
