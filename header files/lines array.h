@@ -51,22 +51,21 @@ void addLineToArray(int n, int m, int gridArray[n+n-1][m+m-1],int row1, int row2
 }
 //TODO make it a header file and put it in main :)
 
-void dataLinear(int n, int m, int gridArray[n+n-1][m+m-1]){
-
-    
-}
-
 // this main is just to test the code.
-/* int main(){
+int main(){
+
+
+
     /*
     int lineArray[ROWS][COLS] = {
-        {2,0,2,0,2},
-        {0,2,0,2,0},
-        {2,0,2,0,2},
+     0   {2,0,2,0,2},
+      1  {0,2,0,2,0},
+     2   {2,0,2,0,2},
         {0,2,0,2,0},
         {2,0,2,0,2}
     };*/ // the 2 represents the Xs.
-/*
+    
+    /*
     printf("enter grid size nxm");
     int n,m;
     scanf("%d %d",&n, &m);
