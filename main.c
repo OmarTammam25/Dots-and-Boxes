@@ -99,6 +99,7 @@ int main(){
                     scanf("%d", &num_row);
                 }while(num_row > 10 || num_row <1);*/
                 break;
+
             case 6:
                 //go to the main page
                 system("cls"); 
@@ -149,13 +150,5 @@ int main(){
     */
 
 
-
-
-int main(){
-    printf("DO YOUR BEST!!!!\n");
-    printf("Testttt\n");
-    printf("testt\n");
-    printf("hi from here , it is working !!");
-    printf("#");
     return 0;
 }
