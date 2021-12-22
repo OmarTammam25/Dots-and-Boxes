@@ -19,7 +19,7 @@ void flatten(int n ,int m,int arr[n][m],int flat_data[]){
         arr -> the data structure array
         flat_data -> the new formed flat data array
     */
-    // note the size of the flaten array can be obtained from (2*m*n-m-n)
+    // note the size of the flaten array can be obtained from (2*m*n-m-n)--> number of dots
     int counter=0;
     for(int i=0;i<n;i++){
         for(int j=0;j<m;j++){
@@ -36,7 +36,7 @@ void flatten(int n ,int m,int arr[n][m],int flat_data[]){
 }
 
 
-
+// n and m here are number of dots (num_row & num_col)
 void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2){
     /* fuction to apply the move of the user 
         and display the new grid 

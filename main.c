@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <Windows.h>
 #include <ctype.h>
+#include <math.h>
 #include "header files/colors.h"
 #include "header files/lines array.h"
 #include "header files/grid_code.h"
+#include "header files/check_function.h"
 
 #define MAX_NAME 10
 
@@ -196,27 +198,58 @@ int main(){
     setColorDefault(); */
 
     //main game loop:
-    
-    int turn, numOfMove, totalNumberOfLines;
+
+    int turn = 1;
+    int numOfMove = 0;
+    int totalNumberOfLines= 0;
     int rowGridArray = num_row + num_row -1;
     int colGridArray = num_col + num_col -1;
     int gridArray[rowGridArray][colGridArray];
     int flatArray[2* num_row*num_col - num_row - num_col];
+    int row1,row2,col1,col2;
+    player1.score =0;
+    player2.score = 0;
+    int i,j; // coord of new line in gridArray
     /*
         1/ print grid
-        2/ ask user for where to place the line
+        2/ ask user for where to place the line TODO CHECK IF USER ENTERS WRONG COORDINATES
         3/ check if its a square
         4/ print new grid
         5/ update variables(score, time, players turn, number of moves for each player, number of remaining line)
         6/ player 2 turn loop again untill no more zeroes in gridArray
     */
 
-    
-    while(1){
+        // print grid
         generateGridArray(num_row,num_col,gridArray);
         flatten(rowGridArray,colGridArray,gridArray,flatArray);
-        change_grid(rowGridArray,colGridArray, flatArray, player1.colorF, player2.colorF);
-        system("pause");
+        system("cls");
+        change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF);
+
+    while(1){
+        turn *= -1; // player 1 negative 1
+
+
+        // ask user where to place the line
+        printf("\n\n");
+        printf("Please enter coordinates of point 1: ");
+        scanf("%d %d", &row1, &col1);
+        printf("Please enter coordinates of point 2: ");
+        scanf("%d %d", &row2, &col2);
+
+        i = addLineToArray(num_row, num_col, gridArray, row1, row2, col1, col2, turn);
+        j = i%10; // col
+        i /= 10; // row
+        flatten(rowGridArray,colGridArray,gridArray,flatArray);
+        system("cls");
+        change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF);
+        switch(turn){
+            case -1: player1.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray); break;
+            case 1: player2.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray); break;
+        }
+        printf("player 1 score is: %d ", player1.score);
+        printf("player 2 score is: %d", player2.score);
+
+        //system("pause");
     }
 
 

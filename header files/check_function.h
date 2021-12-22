@@ -5,7 +5,7 @@ int line_check(int i){
     to check if the line is vertical or horizontal
     
     parameters:
-    n -> the row index of the move 
+    i -> the row index of the move 
     */
    if(i%2==0) return 0; //hor=0
    else return 1; //ver =1
@@ -30,7 +30,7 @@ int check_squares(int i , int j , int n , int m , int data[n][m]){
     if(line == 0){
 
         //check the above 3 elements
-        int sum = data[i-1][j-1]+data[i-1][j+1]+data[i-2][j];
+        int sum = abs(data[i-1][j-1])+abs(data[i-1][j+1])+abs(data[i-2][j]);
         if(sum == 3&&i!=0){
             score++;
             sum = 0;
@@ -38,7 +38,7 @@ int check_squares(int i , int j , int n , int m , int data[n][m]){
         else sum = 0;
 
         //check the below 3 elements
-        sum = data[i+1][j-1]+data[i+1][j+1]+data[i+2][j];
+        sum = abs(data[i+1][j-1])+abs(data[i+1][j+1])+abs(data[i+2][j]);
         if(sum == 3&&i!=n-1){
             score++;
             sum = 0;
@@ -48,14 +48,14 @@ int check_squares(int i , int j , int n , int m , int data[n][m]){
     else if (line == 1){
 
         //check the left 3 elements
-        int sum = data[i-1][j-1]+data[i+1][j-1]+data[i][j-2];
+        int sum = abs(data[i-1][j-1])+abs(data[i+1][j-1])+abs(data[i][j-2]);
         if(sum == 3&&j!=0){
             score++;
             sum = 0;
         }
         else sum = 0;
         //check the right 3 elements
-        sum = data[i-1][j+1]+data[i+1][j+1]+data[i][j+2];
+        sum = abs(data[i-1][j+1])+abs(data[i+1][j+1])+abs(data[i][j+2]);
         if(sum == 3&&j!=m-1){
             score++;
             sum = 0;
