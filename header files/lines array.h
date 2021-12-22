@@ -1,52 +1,83 @@
 #include <stdio.h>
-#define ROWS 5
-#define COLS 5
 
-
-// loop lineArray, check number of Xs in array until you get
-// x number n(which is lineNum)
-// put 1 in [i][j+1]
-// but first check if j+1 == num of colms
-// if true put 1 in [i+1][0]
-void addLineToArray(int rows, int cols, int lineArray[][COLS], int lineNum){
-    int count =0;
-    for (int i = 0; i < ROWS; i++)
+// generate array which will hold the lines. dynamic array ;)
+void generateGridArray(int n, int m, int gridArray[n+n-1][m+m-1]){
+    
+    for (int i = 0; i < n+n-1; i++)
     {
-        for (int j = 0; j < COLS; j++)
+        for (int j = 0; j < m+m-1; j++)
         {
-            if(lineArray[i][j] == 2){
-                count++;
-                if(count == lineNum && j+1 < COLS){
-                    lineArray[i][j+1] = 1;
-                    return;
-                }else if(count == lineNum){
-                    lineArray[i+1][0] = 1;
-                    return;
-                }
+            // generating the rows which begin with a dot
+            if(i%2==0){
+                if(j%2 == 0) gridArray[i][j] = 2;
+                if(j%2 == 1) gridArray[i][j] = 0;
+            }
+
+            // generating the rows which begin witha vert line
+            if(i%2 == 1){
+                if(j%2 == 0) gridArray[i][j] = 0;
+                if(j%2 == 1) gridArray[i][j] = 2;
             }
         }
         
     }
+
+}
+
+// enter row1 as first row is 1
+// enter col1 as first col is 1
+void addLineToArray(int n, int m, int gridArray[n+n-1][m+m-1],int row1, int row2, int col1, int col2){
+
+    if(row1 == row2){
+        int col3;
+        if(col1>col2){ col3 = col1;}
+        else if(col1 < col2) {col3 = col2;}
+        if(gridArray[row1 + row2 -2][2*col3 - 3] == 1){
+            printf("ERROR");
+        }else{
+            gridArray[row1 + row2 -2][2*col3 - 3] = 1;
+        }
+    }
+    if(col1 == col2){
+        int row3;
+        if(row1 > row2) {row3 = row1;}
+        else if(row1<row2) {row3 = row2;}
+        if(gridArray[2*row3 - 3][col1 + col2 - 2] == 1){
+            printf("ERROR");   // TODO CHECK IN MAIN GAME LOOP 
+        }else{
+            gridArray[2*row3 - 3][col1 + col2 - 2] = 1;
+        }
+    }
 }
 //TODO make it a header file and put it in main :)
 
+void dataLinear(int n, int m, int gridArray[n+n-1][m+m-1]){
+
+    
+}
+
 // this main is just to test the code.
-
-/*
-int main(){
-
-    // store which line has been drawn till now. for 2*2 board
+/* int main(){
+    /*
     int lineArray[ROWS][COLS] = {
         {2,0,2,0,2},
         {0,2,0,2,0},
         {2,0,2,0,2},
         {0,2,0,2,0},
         {2,0,2,0,2}
-    }; // the 2 represents the Xs. TODO make size variable depending on the size of the board
-    int lineNum;
-    printf("Please enter the line you want to select: ");
-    scanf("%d", &lineNum);
-    addLineToArray(ROWS,COLS,lineArray,lineNum);
+    };*/ // the 2 represents the Xs.
+/*
+    printf("enter grid size nxm");
+    int n,m;
+    scanf("%d %d",&n, &m);
+
+    int gridArray[n+n-1][m+m-1];
+    generateGridArray(n,m,gridArray);
+    
+    int row1,row2,col1,col2;
+    scanf("%d %d %d %d",&row1,&col1,&row2,&col2);
+
+
+    addLineToArrayCOPY(n,m,gridArray,row1,row2,col1,col2);
     return 0;
-}
-*/
+} */
