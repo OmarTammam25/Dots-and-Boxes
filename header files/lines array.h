@@ -51,7 +51,7 @@ int addLineToArray(int n, int m, int gridArray[n+n-1][m+m-1],int row1, int row2,
         }else{
             gridArray[2*row3 - 3][col1 + col2 - 2] = 1*turn;    
             sum = (2*row3-3)*10;
-            sum == col1+col2-2;
+            sum += col1+col2-2;
             return sum;
         }
     }

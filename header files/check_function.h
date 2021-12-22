@@ -59,8 +59,9 @@ int check_squares(int i , int j , int n , int m , int data[n][m]){
         if(sum == 3&&j!=m-1){
             score++;
             sum = 0;
+        }else{
+            sum = 0;
         }
-        sum = 0;
     }
     return score ;
 }

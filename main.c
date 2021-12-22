@@ -11,10 +11,10 @@
 
 int main(){
 // initializing the game
-    system("cls");
+    //system("cls");
     printf("\t\t\t\twlecome to dots and boxes game :)\n");
     Sleep(500);
-    system("cls");
+    //system("cls");
 
     int num_row = 0; //number of dots in each colomn
     int num_col = 0; //number of dots in each row
@@ -39,18 +39,18 @@ int main(){
         scanf("%d",&choice);
         switch(choice){
             case 1:
-                system("cls");
+                //system("cls");
                 printf("\t\t\t\tStart a new game");
                 goto game_conf; // take him to game configration page
                 choice=0;
                 break;
             case 2:
-                system("cls");
+                //system("cls");
                 printf("\t\t\t\tLoad a game"); // take him to load game page
                 choice=0;
                 break;
             case 3:
-                system("cls");
+               // system("cls");
                 printf("\t\t\t\tTop ten players"); // take hime to top ten players
                 choice=0;
                 break;
@@ -64,7 +64,7 @@ int main(){
                 goto main_page;
         }
     game_conf:
-        system("cls");
+       // system("cls");
         printf("\t\t\t\tgame configuration\n");
         //game setup (size of gride , 2 players or one , choosing colors)
         choice=0;
@@ -116,7 +116,7 @@ int main(){
         }
 
     players_number:
-        system("cls");
+        //system("cls");
         printf("\t\t\t\tgame configuration\n");
         choice=0;
         printf("\t\t\t\tnumber of players\n"); //one or two players
@@ -163,7 +163,7 @@ int main(){
     player player2;
     choice = 0;
 
-    system("cls");
+    //system("cls");
     printf("\t\t\t\tPlayers information\n");
     /* printf("Please enter your player 1 name: ");
     scanf("") */ // TODO GET PLAYER NAME
@@ -222,7 +222,7 @@ int main(){
         // print grid
         generateGridArray(num_row,num_col,gridArray);
         flatten(rowGridArray,colGridArray,gridArray,flatArray);
-        system("cls");
+        //system("cls");
         change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF);
 
     while(1){
@@ -240,7 +240,7 @@ int main(){
         j = i%10; // col
         i /= 10; // row
         flatten(rowGridArray,colGridArray,gridArray,flatArray);
-        system("cls");
+       // system("cls");
         change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF);
         switch(turn){
             case -1: player1.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray); break;
@@ -251,8 +251,13 @@ int main(){
 
         //system("pause");
     }
+    /*
+        1 1 - 1 2
+        input 2 = 2 1 - 2 2
+        input 3 = 1 2 - 2 2
 
+        sum = 3 inside check funtion line 58 in check_function.h
 
-
+    */
     return 0;
 }
