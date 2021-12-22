@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <Windows.h>
+
 #define MAX_NAME 10
 
 int main(){
@@ -164,6 +165,7 @@ int main(){
     printf("1.Red\n");
     printf("2.Blue\n");
 
+
     color_choice:
         scanf("%d", &choice);
         switch(choice){
@@ -215,6 +217,7 @@ int main(){
     }
 
     */
+
 
     return 0;
 }
