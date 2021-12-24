@@ -11,7 +11,7 @@ int line_check(int i){
    else return 1; //ver =1
 }
 
-int check_squares(int i , int j , int n , int m , int data[n][m]){
+int check_squares(int i , int j , int n , int m , int data[n][m], int turn){
     /*
     to check if there is the 3 lines of the square that the new line of the user complete it 
     if yes return the number of squares that this line is used to complete them
@@ -25,6 +25,16 @@ int check_squares(int i , int j , int n , int m , int data[n][m]){
     data -> the data structure array
     */
 
+   /*
+    data structure array explanation:
+    0 means space
+    -1 means player 1 line
+    +1 means player 2 line
+    2 means dot or not a square
+    -3 means player 1 square
+    +3 means player 2 square
+   */
+
     int line = line_check(i);
     int score=0;
     if(line == 0){
@@ -33,6 +43,7 @@ int check_squares(int i , int j , int n , int m , int data[n][m]){
         int sum = abs(data[i-1][j-1])+abs(data[i-1][j+1])+abs(data[i-2][j]);
         if(sum == 3&&i!=0){
             score++;
+            data[i-1][j] = 3*turn;
             sum = 0;
         }
         else sum = 0;
@@ -41,6 +52,7 @@ int check_squares(int i , int j , int n , int m , int data[n][m]){
         sum = abs(data[i+1][j-1])+abs(data[i+1][j+1])+abs(data[i+2][j]);
         if(sum == 3&&i!=n-1){
             score++;
+            data[i+1][j] =3*turn;
             sum = 0;
         }
         sum = 0;
@@ -51,6 +63,7 @@ int check_squares(int i , int j , int n , int m , int data[n][m]){
         int sum = abs(data[i-1][j-1])+abs(data[i+1][j-1])+abs(data[i][j-2]);
         if(sum == 3&&j!=0){
             score++;
+            data[i][j-1] = 3*turn;
             sum = 0;
         }
         else sum = 0;
@@ -58,6 +71,7 @@ int check_squares(int i , int j , int n , int m , int data[n][m]){
         sum = abs(data[i-1][j+1])+abs(data[i+1][j+1])+abs(data[i][j+2]);
         if(sum == 3&&j!=m-1){
             score++;
+            data[i][j+1] = 3*turn;
             sum = 0;
         }else{
             sum = 0;

@@ -7,12 +7,12 @@
 #include "header files/grid_code.h"
 #include "header files/check_function.h"
 
-#define MAX_NAME 10
+#define MAX_NAME 20
 
 int main(){
 // initializing the game
     //system("cls");
-    printf("\t\t\t\twlecome to dots and boxes game :)\n");
+    printf("\t\t\t\tWelcome to dots and boxes game :)\n");
     Sleep(500);
     //system("cls");
 
@@ -165,32 +165,70 @@ int main(){
 
     //system("cls");
     printf("\t\t\t\tPlayers information\n");
-    /* printf("Please enter your player 1 name: ");
-    scanf("") */ // TODO GET PLAYER NAME
-    printf("Please enter player 1 prefered color:\n");
-    printf("1.Red\n");
-    printf("2.Blue\n");
+    fflush(stdin); // to make fgets work
+    // if number of players is 1:
+    if(plyers_num == 1){
+        printf("Please enter your name (max 20 characters): \n");
+        fgets(player1.name, MAX_NAME+1, stdin);
+        fflush(stdin);
+        printf("Please enter your prefered color:\n");
+        printf("1.Red\n");
+        printf("2.Blue\n");
+
+        color_choice:
+            scanf("%d", &choice);
+            switch(choice){
+                case 1:
+                    player1.colorF = FOREGROUND_RED;
+                    player1.colorB = BACKGROUND_RED;
+                    player2.colorF = FOREGROUND_BLUE;
+                    player2.colorB = BACKGROUND_BLUE;
+                    break;
+                case 2:
+                    player1.colorF = FOREGROUND_BLUE;
+                    player1.colorB = BACKGROUND_BLUE;
+                    player2.colorF = FOREGROUND_RED;
+                    player2.colorB = BACKGROUND_RED;
+                    break;
+                default:
+                    printf("please enter num 1 or 2: ");
+                    goto color_choice;
+            }
+    } else
+    { // number of players are 2:
+        printf("Please enter player 1 name (max 20 characters): \n");
+        fgets(player1.name, MAX_NAME+1, stdin);
+        fflush(stdin);
+        printf("Please enter player 2 name (max 20 characters): \n");
+        fgets(player2.name, MAX_NAME + 1, stdin);
+        fflush(stdin);
+
+        printf("Please enter player 1 prefered color:\n");
+        printf("1.Red\n");
+        printf("2.Blue\n");
+        color_choice_2:
+            scanf("%d", &choice);
+            switch(choice){
+                case 1:
+                    player1.colorF = FOREGROUND_RED;
+                    player1.colorB = BACKGROUND_RED;
+                    player2.colorF = FOREGROUND_BLUE;
+                    player2.colorB = BACKGROUND_BLUE;
+                    break;
+                case 2:
+                    player1.colorF = FOREGROUND_BLUE;
+                    player1.colorB = BACKGROUND_BLUE;
+                    player2.colorF = FOREGROUND_RED;
+                    player2.colorB = BACKGROUND_RED;
+                    break;
+                default:
+                    printf("please enter num 1 or 2: ");
+                    goto color_choice_2;
+            }
+    }
 
 
-    color_choice:
-        scanf("%d", &choice);
-        switch(choice){
-            case 1:
-                player1.colorF = FOREGROUND_RED;
-                player1.colorB = BACKGROUND_RED;
-                player2.colorF = FOREGROUND_BLUE;
-                player2.colorB = BACKGROUND_BLUE;
-                break;
-            case 2:
-                player1.colorF = FOREGROUND_BLUE;
-                player1.colorB = BACKGROUND_BLUE;
-                player2.colorF = FOREGROUND_RED;
-                player2.colorB = BACKGROUND_RED;
-                break;
-            default:
-                printf("please enter num 1 or 2: ");
-                goto color_choice;
-        }
+
 
     /* example of setting color of the user
     setColor(player1.colorB);
@@ -205,7 +243,7 @@ int main(){
     int rowGridArray = num_row + num_row -1;
     int colGridArray = num_col + num_col -1;
     int gridArray[rowGridArray][colGridArray];
-    int flatArray[2* num_row*num_col - num_row - num_col];
+    int flatArray[2* num_row*num_col - num_row - num_col + (num_row-1)*(num_col -1)];
     int row1,row2,col1,col2;
     player1.score =0;
     player2.score = 0;
@@ -219,45 +257,40 @@ int main(){
         6/ player 2 turn loop again untill no more zeroes in gridArray
     */
 
-        // print grid
-        generateGridArray(num_row,num_col,gridArray);
-        flatten(rowGridArray,colGridArray,gridArray,flatArray);
-        //system("cls");
-        change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF);
+    // print grid
+    generateGridArray(num_row,num_col,gridArray);
+    flatten(rowGridArray,colGridArray,gridArray,flatArray);
+    //system("cls");
+    change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF, player1.colorB, player2.colorB);
 
-    while(1){
+    while(1)
+    {
         turn *= -1; // player 1 negative 1
-
-
         // ask user where to place the line
         printf("\n\n");
         printf("Please enter coordinates of point 1: ");
         scanf("%d %d", &row1, &col1);
         printf("Please enter coordinates of point 2: ");
         scanf("%d %d", &row2, &col2);
-
+        // adds the line into the array gridArray
         i = addLineToArray(num_row, num_col, gridArray, row1, row2, col1, col2, turn);
         j = i%10; // col
         i /= 10; // row
+        // checks if a square is made and returns the score thus far
+        switch(turn)
+        {
+            case -1: player1.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray, turn); break;
+            case 1: player2.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray, turn); break;
+        }
         flatten(rowGridArray,colGridArray,gridArray,flatArray);
        // system("cls");
-        change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF);
-        switch(turn){
-            case -1: player1.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray); break;
-            case 1: player2.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray); break;
-        }
+        change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
+
         printf("player 1 score is: %d ", player1.score);
         printf("player 2 score is: %d", player2.score);
 
         //system("pause");
     }
-    /*
-        1 1 - 1 2
-        input 2 = 2 1 - 2 2
-        input 3 = 1 2 - 2 2
-
-        sum = 3 inside check funtion line 58 in check_function.h
-
-    */
     return 0;
+    
 }
