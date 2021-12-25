@@ -268,7 +268,10 @@ int main(){
         turn *= -1; // player 1 negative 1
         // ask user where to place the line
         printf("\n\n");
-        printf("Please enter coordinates of point 1: ");
+        if(turn == -1) printf("\nplayer 1 turn\n");
+        if(turn == 1) printf("\nplayer 2 turn\n");
+
+        printf("\nPlease enter coordinates of point 1: ");
         scanf("%d %d", &row1, &col1);
         printf("Please enter coordinates of point 2: ");
         scanf("%d %d", &row2, &col2);
@@ -279,8 +282,8 @@ int main(){
         // checks if a square is made and returns the score thus far
         switch(turn)
         {
-            case -1: player1.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray, turn); break;
-            case 1: player2.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray, turn); break;
+            case -1: player1.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray, &turn); break;
+            case 1: player2.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray, &turn); break;
         }
         flatten(rowGridArray,colGridArray,gridArray,flatArray);
        // system("cls");
