@@ -6,7 +6,6 @@
 #define ver 124
 #define hor 196
 
-
 void flatten(int n ,int m,int arr[n][m],int flat_data[]){
     /*
     function to get the data structure as 2d array of intergers and
@@ -19,7 +18,7 @@ void flatten(int n ,int m,int arr[n][m],int flat_data[]){
         arr -> the data structure array
         flat_data -> the new formed flat data array
     */
-    // note the size of the flaten array can be obtained from (2*m*n-m-n)
+    // note the size of the flaten array can be obtained from (2*m*n-m-n + (n-1)*(m-1))--> number of dots
     int counter=0;
     for(int i=0;i<n;i++){
         for(int j=0;j<m;j++){
@@ -31,13 +30,16 @@ void flatten(int n ,int m,int arr[n][m],int flat_data[]){
             // check if the element is 1 and the row number is odd turn it to vertical line
             else if(arr[i][j]==1&&i%2==1) flat_data[counter++] =  ver ;
             else if(arr[i][j]==-1&&i%2==1) flat_data[counter++]= -ver ;
+            else if(i%2 == 1 && arr[i][j] == 3) flat_data[counter++] = 3;
+            else if(i%2 == 1 && arr[i][j] == -3) flat_data[counter++] = -3;
+            else if(i%2 == 1 && arr[i][j] == 2) flat_data[counter++] = 2;
         }
     }
 }
 
 
-
-void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2){
+// n and m here are number of dots (num_row & num_col)
+void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2,WORD cr1_bg, WORD cr2_bg){
     /* fuction to apply the move of the user 
         and display the new grid 
     */
@@ -48,12 +50,12 @@ void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2){
             if(j!=m-1){
                 if(data[c]<0){
                     setColor(cr1);
-                    printf("%c%c",data[c++]*-1,data[c]*-1); //print horizontal line if exist in the data structure with color -1
+                    printf("%c%c%c%c",data[c++]*-1,data[c]*-1,data[c]*-1,data[c]*-1); //print horizontal line if exist in the data structure with color -1
                     setColorDefault();
                 }
                 else{ 
                     setColor(cr2);
-                    printf("%c%c",data[c++],data[c]); //print horizontal line if exist in the data structure with color 1
+                    printf("%c%c%c%c",data[c++],data[c],data[c],data[c]); //print horizontal line if exist in the data structure with color 1
                     setColorDefault();
                 }
             }
@@ -71,8 +73,22 @@ void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2){
                     printf("%c",data[c++]*1); // printing vertical line if exist in the data structure with color 1
                     setColorDefault();
                 }
-
-                if(j!=m-1) printf("  ");
+                // for printing space between vert lines
+                //TODO  if a square then it prints a colored space :)
+                if(data[c] == 3 && j!=m-1){
+                    setColor(cr2_bg);
+                    printf("    ");
+                    setColorDefault();
+                    c++;
+                }else if(data[c] == -3 && j!=m-1){
+                    setColor(cr1_bg);
+                    printf("    ");
+                    setColorDefault();
+                    c++;                    
+                } else if(data[c] == 2 && j!=m-1){
+                    printf("    ");
+                    c++;
+                }    
             }
         }
         printf("\n");
@@ -80,30 +96,28 @@ void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2){
 }
 
 
-/*
-int main(){
+/* 
+ int main(){
 // the data must be in one dimension form of size (2*m*n - m - n)
 //and having one value of the 3 (' ' , hor , ver)
 
 //example:
 
     
-int data[9][9]={{2,-1,2,0,2,-1,2,-1,2},
-                {1,2,1,2,1,2,1,2,1},
-                {2,1,2,1,2,1,2,1,2},
-                {1,2,0,2,0,2,1,2,1},
-                {2,1,2,-1,2,-1,2,1,2},
-                {-1,2,0,2,1,2,1,2,1},
-                {2,1,2,-1,2,1,2,1,2},
-                {1,2,-1,2,1,2,1,2,1},
-                {2,1,2,-1,2,1,2,1,2}};
-    int flat_data[40];//number of lines
-    flatten(9,9,data,flat_data); //size of data structure
+int data[5][5] ={{2,0,2,0,2},
+                 {0,2,0,2,0},
+                 {2,0,2,0,2},
+                 {0,2,0,2,0},
+                 {2,0,2,0,2} }
+    int flat_data[16];//number of lines
+
+    flatten(5,5,data,flat_data); //size of data structure
+
     for (int i = 0; i < 40 ; i++)
     {
         printf("%c,",flat_data[i]);
-    }
-
+    } 
+ 
     printf("\n");
     
     //int data[49]={' ',hor,hor,hor,hor,ver,ver,ver,ver,ver,ver,
@@ -111,9 +125,9 @@ int data[9][9]={{2,-1,2,0,2,-1,2,-1,2},
     //               hor,hor,hor,hor,hor,ver,ver,ver,-ver,ver,ver,
     //               hor,' ',hor,hor,-hor,' ',ver,ver,ver,ver,ver,
     //               hor,hor,hor,hor,hor};
-                   
-    change_grid(5,5,flat_data,FOREGROUND_RED,FOREGROUND_BLUE);//number of dots
-    system("pause");
+    //int is_square = 1;                
+    //change_grid(5,5,flat_data,FOREGROUND_RED,FOREGROUND_BLUE,BACKGROUND_RED,BACKGROUND_BLUE, is_square);//number of dots
+    //system("pause");
     return 0;
     
-}*/
+} */
