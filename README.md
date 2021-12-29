@@ -8,7 +8,7 @@
  repo for 1st term final project  
 ## to do : 
 
- 1- if a square is made make the user play one more turn!!
+ 1- 
  3- bot player  
  4- saving info to a file ( choose between txt, json, excel sheet)  
  5- json files\n
@@ -41,3 +41,4 @@
  5- check function  
  6- user input method  
  7- game setup (size of grid , 2 players or one , choosing colors)  
+ 8- if a square is made make the user play one more turn!!  
