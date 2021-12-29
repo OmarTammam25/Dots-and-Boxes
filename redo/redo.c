@@ -192,20 +192,20 @@ void redo(int *g_size,int g_storage[],int *r_size,int r_storage[],int n,int m,in
 
     }
 }
-/*
+
 int main(){
 
-    int data[9][9]={{2,-1,2,1,2,-1,2,1,2},
-                    {-1,3,1,3,-1,3,1,3,-1},
-                    {2,1,2,1,2,1,2,1,2},
-                    {1,2,-1,2,0,2,1,2,1},
+    int data[9][9]={{2,-1,2,0,2,0,2,0,2},
+                    {0,2,0,2,0,2,0,2,0},
+                    {2,0,2,0,2,0,2,0,2},
+                    {0,2,0,2,0,2,0,2,0},
                     {2,0,2,0,2,0,2,0,2},
                     {0,2,0,2,0,2,0,2,0},
                     {2,0,2,0,2,0,2,0,2},
                     {0,2,0,2,0,2,0,2,0},
                     {2,0,2,0,2,0,2,0,2}};
     
-    int s[17] = {-1,3,-5,7,-10,12,-14,16,-18,21,23,25,27,30,-32,36,38};
+    int s[17] = {-1};
     int r[100]={};
     int g_size= 17;
     int r_size=0;
@@ -214,6 +214,7 @@ int main(){
     int score2=4;
 
     undo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2);
+  /*   undo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2);
     undo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2);
     undo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2);
     undo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2);
@@ -226,13 +227,12 @@ int main(){
     undo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2);
     undo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2);
     undo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2);
-    undo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2);
-    undo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2);
+    undo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2); */
 //s[2] ={-1,3}
 //r[15]={38,36,-32,30,27,25,23,21,-18,16,-14,12,-10,7,-5}
         
     redo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2); //t 1
-    redo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2); //t -1
+/*     redo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2); //t -1
     redo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2); //t 1
     redo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2); //t -1
     redo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2); //t 1
@@ -245,8 +245,8 @@ int main(){
     redo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2); //t -1
     redo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2); //t 1
     redo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2); //t 1 ++
-    redo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2); //t -1 
+    redo(&g_size,s,&r_size,r,9,9,data,&t,&score1,&score2); //t -1  */
 
 
     return 0;
-}*/
+}

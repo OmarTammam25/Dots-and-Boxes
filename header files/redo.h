@@ -158,8 +158,8 @@ void redo(int *g_size,int g_storage[],int *r_size,int r_storage[],int n,int m,in
         g_storage[*g_size]=r_storage[*r_size-1];
         *g_size+=1;
         int n_col=abs(r_storage[*r_size-1]%10);
-        r_storage[*r_size-1]/=10;
-        int n_row=abs(r_storage[*r_size-1]);
+        //r_storage[*r_size-1]/=10;
+        int n_row=abs(r_storage[*r_size-1]/10);
         value=r_storage[*r_size-1]/abs(r_storage[*r_size-1]);
 
         if(*r_size>1){
