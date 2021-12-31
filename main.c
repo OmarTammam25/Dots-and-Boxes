@@ -2,16 +2,18 @@
 #include <Windows.h>
 #include <ctype.h>
 #include <math.h>
+#include <string.h>
 #include "header files/colors.h"
 #include "header files/lines array.h"
 #include "header files/grid_code.h"
 #include "header files/check_function.h"
+#include "header files/Rank.h"
 
 #define MAX_NAME 20
-
+#define MAX_USERS 100
 int main(){
 // initializing the game
-    //system("cls");
+    system("cls");
     printf("\t\t\t\tWelcome to dots and boxes game :)\n");
 
     // Initialize variables
@@ -38,9 +40,16 @@ int main(){
     int i,j; // coord of new line in gridArray
     int save = 1;
     FILE *ptr = NULL;
+    int pWon = 0; // indicates who won
+    int numOfGames = 0; // number of games played.
+    char userNames[MAX_USERS][MAX_NAME];
+    int scoresHistory[MAX_USERS] = {0};
+    int loadChoice;
+    int fileSave;
+
 
     Sleep(500);
-    //system("cls");
+    system("cls");
 
 
 
@@ -52,7 +61,7 @@ int main(){
     int choice=0;
     main_page:
         //printing the main menu elements
-
+        system("cls");
         for (int i=0;i<4;i++){
             printf("%s\n",main_menu[i]);
         }
@@ -63,21 +72,25 @@ int main(){
         int load = 0;
         switch(choice){
             case 1:
-                //system("cls");
+                system("cls");
                 printf("\t\t\t\tStart a new game");
                 goto game_conf; // take him to game configration page
                 choice=0;
                 break;
             case 2:
-                //system("cls");
+                system("cls");
                 printf("\t\t\t\tLoad a game\n"); // take him to load game page
                 load = 1;
                 choice=0;
                 goto load_game;
                 break;
             case 3:
-               // system("cls");
+                system("cls");
                 printf("\t\t\t\tTop ten players"); // take hime to top ten players
+                // handling Rank of players :)
+                Rank(userNames, scoresHistory);
+                topTen(userNames, scoresHistory);
+                system("pause");
                 choice=0;
                 break;
             case 4:
@@ -86,11 +99,11 @@ int main(){
             default :
                 printf("\t\t\t\tplease enter a valid number between 1-4");
                 choice=0;
-                Sleep(1000);
+                system("pause");
                 goto main_page;
         }
     game_conf:
-       // system("cls");
+        system("cls");
         printf("\t\t\t\tgame configuration\n");
         //game setup (size of gride , 2 players or one , choosing colors)
         choice=0;
@@ -168,7 +181,7 @@ int main(){
             default:
                 printf("\t\t\t\tplease enter a valid number between 1-3");
                 choice=0;
-                Sleep(1000);
+                system("pause");
                 goto players_number;
 
         }
@@ -179,7 +192,6 @@ int main(){
     update the score of the user if it is higher than his last high score
     */
 
-
     choice = 0;
     system("cls");
     printf("\t\t\t\tPlayers information\n");
@@ -189,6 +201,7 @@ int main(){
         printf("Please enter your name (max 20 characters): \n");
         fgets(player1.name, MAX_NAME+1, stdin);
         fflush(stdin);
+        capitalize(player1.name);
         printf("Please enter your prefered color:\n");
         printf("1.Red\n");
         printf("2.Blue\n");
@@ -220,6 +233,8 @@ int main(){
         printf("Please enter player 2 name (max 20 characters): \n");
         fgets(player2.name, MAX_NAME + 1, stdin);
         fflush(stdin);
+        capitalize(player1.name);
+        capitalize(player2.name);
 
         printf("Please enter player 1 prefered color:\n");
         printf("1.Red\n");
@@ -266,11 +281,31 @@ int main(){
     */
 
    if( load == 1){
-       ptr = fopen("saveData.bin", "rb");
+       system("cls");
+       printf("\n\t\t\t\tenter a number between 1-3 to select saved data: ");
+       scanf("%d", &loadChoice);
+       switch (loadChoice)
+       {
+       case 1:
+           ptr = fopen("saveData1.bin", "rb");
+           break;
+        case 2:
+            ptr = fopen("saveData2.bin", "rb"); 
+            break;
+        case 3:
+            ptr = fopen("saveData3.bin", "rb");
+            break;
+       default:
+            printf("\n Please  select a number from 1-3: ");
+            system("pause");
+            goto load_game;
+            break;
+       }
        if(ptr == NULL){
-           printf("error, no file found!");
+           printf("error, no file found!\n");
+           system("pause");
            load = 0;
-           goto load_game;
+           goto main_page;
        }
         fread(&num_row, sizeof(int), 1, ptr);
         fread(&num_col, sizeof(int), 1, ptr);
@@ -295,46 +330,67 @@ int main(){
     // print grid
     if(!load) generateGridArray(num_row,num_col, gridArray);
     flatten(rowGridArray,colGridArray,gridArray, flatArray);
-    //system("cls");
+    system("cls");
     change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF, player1.colorB, player2.colorB);
-
-    while(1)
+    int play = 0;
+    while(!play)
     {
+        play = 1;
         turn *= -1; // player 1 negative 1
         // ask user where to place the line
         printf("\n\n");
         if(turn == -1) printf("\nplayer 1 turn\n");
         if(turn == 1) printf("\nplayer 2 turn\n");
 
+        printf("\nwrite 55 to save the game\n");
         printf("\nPlease enter coordinates of point 1: ");
-        scanf("%d %d", &row1, &col1);
+        scanf("%d", &row1);
         save_file:
             if(row1 == 55){
                 FILE *fptr = NULL;
-                fptr = fopen("saveData.bin", "wb");
+                printf("\nenter a number between  1-3 to save the game\n");
+                scanf("%d", &fileSave);
+                switch (fileSave)
+                {
+                case 1:
+                    fptr = fopen("saveData1.bin", "wb");                    
+                    break;
+                case 2:
+                    fptr = fopen("saveData2.bin", "wb");
+                    break;
+                case 3:
+                    fptr = fopen("saveData3.bin", "wb");
+                    break;
+                default:
+                    printf("\nEnter a number between 1-3");
+                    goto save_file;
+                    break;
+                }
                 if(fptr == NULL){
                     printf("error!!");
                     return 1;
+                }else{
+                    fwrite(&num_row, sizeof(int), 1, fptr);
+                    fwrite(&num_col, sizeof(int), 1, fptr);
+                    fwrite(&turn, sizeof(int), 1, fptr);
+                    fwrite(&rowGridArray, sizeof(int), 1, fptr);
+                    fwrite(&colGridArray, sizeof(int), 1, fptr);
+                    fwrite(&player1, sizeof(player), 1, fptr);
+                    fwrite(&player2, sizeof(player), 1, fptr);
+                    fwrite(&gridArray, sizeof(int), sizeof(gridArray), fptr);
+                    fclose(fptr);
+                    printf("\n Game Saved!\n");
+                    system("pause");
+                    system("cls");
+                    change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
+                    turn *= -1;
+                    play = 0;
+                    continue;
                 }
-                fwrite(&num_row, sizeof(int), 1, fptr);
-                fwrite(&num_col, sizeof(int), 1, fptr);
-                fwrite(&turn, sizeof(int), 1, fptr);
-                fwrite(&rowGridArray, sizeof(int), 1, fptr);
-                fwrite(&colGridArray, sizeof(int), 1, fptr);
-                fwrite(&player1, sizeof(player), 1, fptr);
-                fwrite(&player2, sizeof(player), 1, fptr);
-                fwrite(&gridArray, sizeof(int), sizeof(gridArray), fptr);
-                fclose(fptr);
-                printf("\n Game Saved!\n");
-                change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
-                turn *= -1;
-                continue;
             }
+        scanf("%d", &col1);
         printf("Please enter coordinates of point 2: ");
         scanf("%d %d", &row2, &col2);
-
-
-
 
         // adds the line into the array gridArray
         i = addLineToArray(num_row, num_col, gridArray, row1, row2, col1, col2, turn);
@@ -347,13 +403,134 @@ int main(){
             case 1: player2.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray, &turn); break;
         }
         flatten(rowGridArray,colGridArray,gridArray,flatArray);
-       // system("cls");
+        system("cls");
         change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
 
         printf("player 1 score is: %d ", player1.score);
         printf("player 2 score is: %d", player2.score);
 
-        //system("pause");
+        // check game end
+        for (int h=0; h<2*num_row-1;h++){
+            for (int g=0;g<2*num_col-1;g++){
+                if(gridArray[h][g] ==0){
+                    play =0;
+                    break;
+                }
+            }
+        }
+        if(play == 1){
+            if(player1.score > player2.score){
+                printf("\nPlayer 1 (%s)  won!\n", player1.name);
+                FILE *usernames = NULL;
+                FILE *scores = NULL;
+                usernames = fopen("usernames.bin","ab");
+                scores = fopen("scores.bin", "ab");
+                fclose(usernames);
+                fclose(scores);
+                int foundName=0;
+                // search for name and update score
+                    FILE *nptr = NULL;
+                    nptr = fopen("usernames.bin", "rb+");
+                    FILE *sptr =NULL;
+                    sptr = fopen("scores.bin", "rb+");
+                    if(nptr != NULL && sptr !=NULL){
+                        char temp[20];
+                        int index_num = 0;
+                        int tempValue = 0;
+                        while(fgets(temp, 20, nptr) != NULL)
+                        {
+                            if(strcmp(temp, player1.name) == 0) // that means we found the string
+                            { 
+                                if( fseek(sptr, index_num * sizeof(int), SEEK_SET) == 0 ) // seeks to wanted value in file
+                                { 
+                                    foundName = 1;  
+                                    fread(&tempValue, sizeof(int), 1, sptr); // reads the value
+                                    if(player1.score > tempValue) // compares it
+                                    { 
+                                        fseek(sptr, index_num * sizeof(int), SEEK_SET);
+                                        fwrite(&player1.score, sizeof(int), 1, sptr);
+                                    }
+                                }  
+
+                            }
+                            index_num++;
+                        } 
+                        fclose(sptr);
+                        fclose(nptr);
+
+                    }
+                if(!foundName){
+                    usernames = fopen("usernames.bin","ab");
+                    scores = fopen("scores.bin", "ab");
+                    fwrite(&player1.name, sizeof(char), strlen(player1.name), usernames);
+                    fwrite(&player1.score, sizeof(int), 1, scores);
+                    fclose(usernames);
+                    fclose(scores);
+                }
+                pWon = 1;
+                system("pause");
+
+            }else if(player1.score < player2.score){
+                if(plyers_num == 2){
+                    printf("\nPlayer 2 (%s) won!\n", player2.name);
+                    FILE *usernames = NULL;
+                    FILE *scores = NULL;
+                    usernames = fopen("usernames.bin","ab");
+                    scores = fopen("scores.bin", "ab");
+                    fclose(usernames);
+                    fclose(scores);
+                    int foundName=0;
+                    // search for name and update score
+                        FILE *nptr = NULL;
+                        nptr = fopen("usernames.bin", "rb+");
+                        FILE *sptr =NULL;
+                        sptr = fopen("scores.bin", "rb+");
+                        if(nptr != NULL && sptr !=NULL){
+                            char temp[20];
+                            int index_num = 0;
+                            int tempValue = 0;
+                            while(fgets(temp, 20, nptr) != NULL)
+                            {
+                                if(strcmp(temp, player2.name) == 0) // that means we found the string
+                                { 
+                                    if( fseek(sptr, index_num * sizeof(int), SEEK_SET) == 0 ) // seeks to wanted value in file
+                                    { 
+                                        foundName = 1;  
+                                        fread(&tempValue, sizeof(int), 1, sptr); // reads the value
+                                        if(player2.score > tempValue) // compares it
+                                        { 
+                                            fseek(sptr, index_num * sizeof(int), SEEK_SET);
+                                            fwrite(&player2.score, sizeof(int), 1, sptr);
+                                        }
+                                    }  
+
+                                }
+                                index_num++;
+                            } 
+                            fclose(sptr);
+                            fclose(nptr);
+
+                        }
+                    if(!foundName){
+                        usernames = fopen("usernames.bin","ab");
+                        scores = fopen("scores.bin", "ab");
+                        fwrite(&player2.name, sizeof(char), strlen(player2.name), usernames);
+                        fwrite(&player2.score, sizeof(int), 1, scores);
+                        fclose(usernames);
+                        fclose(scores);
+                    }
+                    pWon = 2;
+                }else{
+                    printf("YOU LOST!");
+                }
+                system("pause");
+            }else{
+                printf("Draw!");
+                pWon = 0;
+                system("pause");
+
+            }
+        }
     }
     return 0;
     
