@@ -29,8 +29,8 @@ void undo(int *g_size,int g_storage[],int *r_size,int r_storage[],int n,int m,in
     r_storage[*r_size]=g_storage[*g_size-1];
     *r_size+=1;
     int n_col=abs(g_storage[*g_size-1]%10);
-    g_storage[*g_size-1]/=10;
-    int n_row=abs(g_storage[*g_size-1]);
+    //g_storage[*g_size-1]/=10;
+    int n_row=abs(g_storage[*g_size-1]/10);
 
     if (grid_array[n_row][n_col]==1) {
         *turn = 1;
@@ -101,7 +101,7 @@ int line_ch(int i){
 }
 
 int check(int i , int j , int n , int m , int data[n][m],int turn){
-    int line = line_ch(i);
+    int line = i%2;
     int score=0;
     if(line == 0){
 
@@ -158,8 +158,8 @@ void redo(int *g_size,int g_storage[],int *r_size,int r_storage[],int n,int m,in
         g_storage[*g_size]=r_storage[*r_size-1];
         *g_size+=1;
         int n_col=abs(r_storage[*r_size-1]%10);
-        r_storage[*r_size-1]/=10;
-        int n_row=abs(r_storage[*r_size-1]);
+        //r_storage[*r_size-1]/=10;
+        int n_row=abs(r_storage[*r_size-1]/10);
         value=r_storage[*r_size-1]/abs(r_storage[*r_size-1]);
 
         if(*r_size>1){

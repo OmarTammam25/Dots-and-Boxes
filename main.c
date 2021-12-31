@@ -6,7 +6,7 @@
 #include "header files/lines array.h"
 #include "header files/grid_code.h"
 #include "header files/check_function.h"
-#include "header files/redo.h"
+#include "redo/redo.c"
 
 #define MAX_NAME 20
 
@@ -305,6 +305,7 @@ int main(){
         i /= 10; // row
         //test store
         g_size=store(g_size,g_storage,i,j,turn);
+        r_size=0;
         // checks if a square is made and returns the score thus far
         switch(turn)
         {
