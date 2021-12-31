@@ -1,15 +1,15 @@
 //#include <stdio.h>
-
+/*
 int line_check(int i){
-    /*
+    
     to check if the line is vertical or horizontal
     
     parameters:
     i -> the row index of the move 
-    */
+    
    if(i%2==0) return 0; //hor=0
    else return 1; //ver =1
-}
+}*/
 
 int check_squares(int i , int j , int n , int m , int data[n][m], int *turn){
     /*
@@ -35,7 +35,7 @@ int check_squares(int i , int j , int n , int m , int data[n][m], int *turn){
     +3 means player 2 square
    */
 
-    int line = line_check(i);
+    int line = i%2;
     int score=0;
     if(line == 0){
 
