@@ -55,7 +55,10 @@ int main(){
     int fileSave;
     player1.numOfMove = 0;
     player2.numOfMove = 0;
-
+    int g_size=0;
+    int r_size=0;
+    int g_storage[100];
+    int r_storage[100];
 
     Sleep(500);
     system("cls");
@@ -278,10 +281,7 @@ int main(){
     setColorDefault(); */
 
     //main game loop:
-    int g_size=0;
-    int r_size=0;
-    int g_storage[100];
-    int r_storage[100];
+ 
     load_game: 
 
     /*
@@ -327,6 +327,9 @@ int main(){
         fread(&colGridArray, sizeof(int), 1, ptr);
         fread(&player1, sizeof(player), 1, ptr);
         fread(&player2, sizeof(player), 1, ptr);
+        fread(&plyers_num, sizeof(int), 1, ptr);
+        fread(&g_size, sizeof(int), 1, ptr);  
+        fread(&g_storage, sizeof(int), sizeof(g_storage), ptr);
         turn *= -1;
    }else{
         rowGridArray = num_row + num_row -1;
@@ -408,6 +411,9 @@ int main(){
                         fwrite(&colGridArray, sizeof(int), 1, fptr);
                         fwrite(&player1, sizeof(player), 1, fptr);
                         fwrite(&player2, sizeof(player), 1, fptr);
+                        fwrite(&plyers_num, sizeof(int), 1, fptr);
+                        fwrite(&g_size, sizeof(int), 1, fptr);  
+                        fwrite(&g_storage, sizeof(int), sizeof(g_storage), fptr);
                         fwrite(&gridArray, sizeof(int), sizeof(gridArray), fptr);
                         fclose(fptr);
                         printf("\n Game Saved!\n");
@@ -605,11 +611,11 @@ int main(){
                     }
                     pWon = 2;
                 }else{
-                    printf("YOU LOST!");
+                    printf("YOU LOST!\n");
                 }
                 system("pause");
             }else{
-                printf("Draw!");
+                printf("Draw!\n");
                 pWon = 0;
                 system("pause");
 
