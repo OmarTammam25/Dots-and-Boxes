@@ -2,19 +2,26 @@
 #include <Windows.h>
 #include <ctype.h>
 #include <math.h>
+#include <stdlib.h>
+#include <time.h>
 #include <string.h>
 #include "header files/colors.h"
 #include "header files/lines array.h"
 #include "header files/grid_code.h"
 #include "header files/check_function.h"
+#include "redo/redo.c"
+#include "ai_bot/ai.c"
 #include "header files/Rank.h"
 
 #define MAX_NAME 20
 #define MAX_USERS 100
+
 int main(){
 // initializing the game
     system("cls");
     printf("\t\t\t\tWelcome to dots and boxes game :)\n");
+    system("pause");
+    system("cls");
 
     // Initialize variables
     typedef struct{
@@ -48,7 +55,10 @@ int main(){
     int fileSave;
     player1.numOfMove = 0;
     player2.numOfMove = 0;
-
+    int g_size=0;
+    int r_size=0;
+    int g_storage[100];
+    int r_storage[100];
 
     Sleep(500);
     system("cls");
@@ -271,6 +281,7 @@ int main(){
     setColorDefault(); */
 
     //main game loop:
+ 
     load_game: 
 
     /*
@@ -316,6 +327,9 @@ int main(){
         fread(&colGridArray, sizeof(int), 1, ptr);
         fread(&player1, sizeof(player), 1, ptr);
         fread(&player2, sizeof(player), 1, ptr);
+        fread(&plyers_num, sizeof(int), 1, ptr);
+        fread(&g_size, sizeof(int), 1, ptr);  
+        fread(&g_storage, sizeof(int), sizeof(g_storage), ptr);
         turn *= -1;
    }else{
         rowGridArray = num_row + num_row -1;
@@ -335,87 +349,154 @@ int main(){
     system("cls");
     change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF, player1.colorB, player2.colorB);
     int play = 0;
-
+    int called =0;
+    int coor;
 
     while(!play)
     {
         play = 1;
-        turn *= -1; // player 1 negative 1
+        if(!called){
+            turn *= -1; // player 1 negative 1   
+        }
+        called=0;
         // ask user where to place the line
         printf("\n\n");
-        if(turn == -1) printf("\nplayer 1 turn\n");
-        if(turn == 1) printf("\nplayer 2 turn\n");
+        if(plyers_num==1&&turn==1){
+            coor=playf(2*num_row-1,2*num_col-1,gridArray);
+        }
+        else{
+            if(turn == -1) printf("\nplayer 1 turn\n");
+            if(turn == 1) printf("\nplayer 2 turn\n");
 
-        printf("\nwrite 55 to save the game\n");
-        printf("\nplayer 1 score is: %d ", player1.score);
-        printf("\t\t\t\t\t\t\tplayer 2 score is: %d", player2.score);
-        printf("\nplayer 1 total moves: %d ", player1.numOfMove);
-        printf("\t\t\t\t\t\tplayer 2 total moves: %d", player2.numOfMove);
-        
-        printf("\n\nPlease enter coordinates of point 1: ");
-        scanf("%d", &row1);
-        save_file:
-            if(row1 == 55){
-                FILE *fptr = NULL;
-                printf("\nenter a number between  1-3 to save the game\n");
-                scanf("%d", &fileSave);
-                switch (fileSave)
-                {
-                case 1:
-                    fptr = fopen("saveData1.bin", "wb");                    
-                    break;
-                case 2:
-                    fptr = fopen("saveData2.bin", "wb");
-                    break;
-                case 3:
-                    fptr = fopen("saveData3.bin", "wb");
-                    break;
-                default:
-                    printf("\nEnter a number between 1-3");
-                    goto save_file;
-                    break;
+            printf("\nwrite 55 to save the game\n");
+            printf("\nwrite 22 to undo\n");
+            printf("\nwrite 33 to redo\n");
+            printf("\nplayer 1 score is: %d ", player1.score);
+            printf("\t\t\t\t\t\t\tplayer 2 score is: %d", player2.score);
+            printf("\nplayer 1 total moves: %d ", player1.numOfMove);
+            printf("\t\t\t\t\t\tplayer 2 total moves: %d", player2.numOfMove);
+            
+            printf("\n\nPlease enter coordinates of point 1: ");
+            scanf("%d", &row1);
+
+            save_file:
+                if(row1 == 55){
+                    FILE *fptr = NULL;
+                    printf("\nenter a number between  1-3 to save the game\n");
+                    scanf("%d", &fileSave);
+                    switch (fileSave)
+                    {
+                    case 1:
+                        fptr = fopen("saveData1.bin", "wb");                    
+                        break;
+                    case 2:
+                        fptr = fopen("saveData2.bin", "wb");
+                        break;
+                    case 3:
+                        fptr = fopen("saveData3.bin", "wb");
+                        break;
+                    default:
+                        printf("\nEnter a number between 1-3");
+                        goto save_file;
+                        break;
+                    }
+                    if(fptr == NULL){
+                        printf("error!!");
+                        return 1;
+                    }else{
+                        fwrite(&num_row, sizeof(int), 1, fptr);
+                        fwrite(&num_col, sizeof(int), 1, fptr);
+                        fwrite(&turn, sizeof(int), 1, fptr);
+                        fwrite(&rowGridArray, sizeof(int), 1, fptr);
+                        fwrite(&colGridArray, sizeof(int), 1, fptr);
+                        fwrite(&player1, sizeof(player), 1, fptr);
+                        fwrite(&player2, sizeof(player), 1, fptr);
+                        fwrite(&plyers_num, sizeof(int), 1, fptr);
+                        fwrite(&g_size, sizeof(int), 1, fptr);  
+                        fwrite(&g_storage, sizeof(int), sizeof(g_storage), fptr);
+                        fwrite(&gridArray, sizeof(int), sizeof(gridArray), fptr);
+                        fclose(fptr);
+                        printf("\n Game Saved!\n");
+                        system("pause");
+                        system("cls");
+                        change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
+                        turn *= -1;
+                        play = 0;
+                        continue;
+                    }
                 }
-                if(fptr == NULL){
-                    printf("error!!");
-                    return 1;
-                }else{
-                    fwrite(&num_row, sizeof(int), 1, fptr);
-                    fwrite(&num_col, sizeof(int), 1, fptr);
-                    fwrite(&turn, sizeof(int), 1, fptr);
-                    fwrite(&rowGridArray, sizeof(int), 1, fptr);
-                    fwrite(&colGridArray, sizeof(int), 1, fptr);
-                    fwrite(&player1, sizeof(player), 1, fptr);
-                    fwrite(&player2, sizeof(player), 1, fptr);
-                    fwrite(&gridArray, sizeof(int), sizeof(gridArray), fptr);
-                    fclose(fptr);
-                    printf("\n Game Saved!\n");
-                    system("pause");
-                    system("cls");
-                    change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
-                    turn *= -1;
-                    play = 0;
-                    continue;
+            // undo
+            else if(row1==22){
+                if(plyers_num==1){
+                    int comp_score=player2.score;
+                    undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    while(comp_score!=player2.score){
+                        comp_score=player2.score;
+                        undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                        //undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    }
+                    called =1;
+                    goto print_grid;
+                }
+                else{
+                    undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    called =1;
+                    goto print_grid;
                 }
             }
-        scanf("%d", &col1);
-        printf("Please enter coordinates of point 2: ");
-        scanf("%d %d", &row2, &col2);
+            // redo
+            else if(row1==33){
+                if(plyers_num==1){
+                    int comp_score=player2.score;
+                    redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    while(comp_score!=player2.score){
+                        comp_score=player2.score;
+                        redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    }
+                    called =1;
+                    goto print_grid;
+                }
+                else{
+                    redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    called =1;
+                    goto print_grid;
+                }
+            }
+            scanf("%d", &col1);
+            printf("Please enter coordinates of point 2: ");
+            scanf("%d %d", &row2, &col2);
+        }
 
         // adds the line into the array gridArray
-        i = addLineToArray(num_row, num_col, gridArray, row1, row2, col1, col2, turn);
-        j = i%10; // col
-        i /= 10; // row
+        if(plyers_num==1&&turn==1){
+            i = coor;
+            j = i%10; // col
+            i /= 10; // row
+            gridArray[i][j]=1;
+        }
+        else{
+            i = addLineToArray(num_row, num_col, gridArray, row1, row2, col1, col2, turn);
+            j = i%10; // col
+            i /= 10; // row
+        }
+        //test store
+        g_size=store(g_size,g_storage,i,j,turn);
+        r_size=0;
+        
         // checks if a square is made and returns the score thus far
         switch(turn)
         {
             case -1: player1.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray, &turn); break;
             case 1: player2.score +=check_squares(i,j,rowGridArray, colGridArray, gridArray, &turn); break;
         }
-        flatten(rowGridArray,colGridArray,gridArray,flatArray);
-        system("cls");
-        change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
-        if(turn == -1) player1.numOfMove++;  // doesnt work if user inpurs wrong coordinates :(
-        if(turn == 1) player2.numOfMove++;
+        print_grid:
+            flatten(rowGridArray,colGridArray,gridArray,flatArray);
+            system("cls");
+            change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
+            if(turn == -1) player1.numOfMove++;  // doesnt work if user inpurs wrong coordinates :(
+            if(turn == 1) player2.numOfMove++;
 
 
         // check game end
@@ -530,11 +611,11 @@ int main(){
                     }
                     pWon = 2;
                 }else{
-                    printf("YOU LOST!");
+                    printf("YOU LOST!\n");
                 }
                 system("pause");
             }else{
-                printf("Draw!");
+                printf("Draw!\n");
                 pWon = 0;
                 system("pause");
 
@@ -542,5 +623,4 @@ int main(){
         }
     }
     return 0;
-    
 }

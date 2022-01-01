@@ -9,9 +9,7 @@
 ## to do : 
 
  1- 
- 3- bot player  
- 4- saving info to a file ( choose between txt, json, excel sheet)  
- 5- json files\n
+
  6- handle user input errors :(  
 
 ## un done :
@@ -29,8 +27,6 @@
 
 ## bouns:  
  1- gui  
- 2- ai  
- 3-  
 
 
 ## done:
@@ -42,3 +38,6 @@
  6- user input method  
  7- game setup (size of grid , 2 players or one , choosing colors)  
  8- if a square is made make the user play one more turn!!  
+ 9- bot player  
+ 10- saving info to a file ( choose between txt, json, excel sheet)   
+ 11-ai  
