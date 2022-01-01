@@ -1,14 +1,15 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include <Windows.h>
 #include <ctype.h>
 #include <math.h>
+#include <stdlib.h>
+#include <time.h>
 #include "header files/colors.h"
 #include "header files/lines array.h"
 #include "header files/grid_code.h"
 #include "header files/check_function.h"
 #include "redo/redo.c"
+#include "ai_bot/ai.c"
 
 #define MAX_NAME 20
 
@@ -272,6 +273,7 @@ int main(){
     change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF, player1.colorB, player2.colorB);
     int play=0;//indicate the game is still working
     int called =0;
+    int coor;
     while(!play)
     {
         play=1;
@@ -281,30 +283,70 @@ int main(){
         called=0;
         // ask user where to place the line
         printf("\n\n");
-        if(turn == -1) printf("\nplayer 1 turn\n");
-        if(turn == 1) printf("\nplayer 2 turn\n");
+        if(plyers_num==1&&turn==1){
+            coor=playf(2*num_row-1,2*num_col-1,gridArray);
+        }
+        else{
+            if(turn == -1) printf("\nplayer 1 turn\n");
+            if(turn == 1) printf("\nplayer 2 turn\n");
 
-        printf("\nPlease enter coordinates of point 1: ");
-        scanf("%d", &row1);
-        
-        // undo
-        if(row1==22){
-            undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-            called =1;
-            goto print_grid;
-        }
-        else if(row1==33){
-            redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-            called =1;
-            goto print_grid;
-        }
-        scanf("%d", &col1);
-        printf("Please enter coordinates of point 2: ");
-        scanf("%d %d", &row2, &col2);
+            printf("\nPlease enter coordinates of point 1: ");
+            scanf("%d", &row1);
+            
+            // undo
+            if(row1==22){
+                if(plyers_num==1){
+                    int comp_score=player2.score;
+                    undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    while(comp_score!=player2.score){
+                        comp_score=player2.score;
+                        undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                        //undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    }
+                    called =1;
+                    goto print_grid;
+                }
+                else{
+                    undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    called =1;
+                    goto print_grid;
+                }
+            }
+            else if(row1==33){
+                if(plyers_num==1){
+                    int comp_score=player2.score;
+                    redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    while(comp_score!=player2.score){
+                        comp_score=player2.score;
+                        redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    }
+                    called =1;
+                    goto print_grid;
+                }
+                else{
+                    redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    called =1;
+                    goto print_grid;
+                }
+            }
+            scanf("%d", &col1);
+            printf("Please enter coordinates of point 2: ");
+            scanf("%d %d", &row2, &col2);
+            }
         // adds the line into the array gridArray
-        i = addLineToArray(num_row, num_col, gridArray, row1, row2, col1, col2, turn);
-        j = i%10; // col
-        i /= 10; // row
+        if(plyers_num==1&&turn==1){
+            i = coor;
+            j = i%10; // col
+            i /= 10; // row
+            gridArray[i][j]=1;
+        }
+        else {
+            i = addLineToArray(num_row, num_col, gridArray, row1, row2, col1, col2, turn);
+            j = i%10; // col
+            i /= 10; // row
+        }
         //test store
         g_size=store(g_size,g_storage,i,j,turn);
         r_size=0;
@@ -330,7 +372,7 @@ int main(){
         //sytem("pause");
     }
 
-    //system("pause");
+    system("pause");
     system("cls");
     printf("game over");
     return 0;

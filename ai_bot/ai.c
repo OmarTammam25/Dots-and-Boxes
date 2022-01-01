@@ -1,8 +1,11 @@
+
+/*
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
-
+#include <windows.h>
+*/
 int arr0[100];
 int size0;
 int arr1[100];
@@ -14,6 +17,11 @@ int size3;
 int marr[100];
 int sizem;
 
+void zerof(int size,int array[size]){
+    for(int i =0;i<size;i++){
+        array[i]=0;
+    }
+}
 int in (int number,int array[],int size){
     
     for(int i=0;i<size;i++){
@@ -23,28 +31,27 @@ int in (int number,int array[],int size){
 }
 
 void switchf(int sum,int i,int j,int*score ){
-    int num =i*10+j;
+    int coor =i*10+j;
     if(sum==2){
-        arr2[size2]=num; 
+        arr2[size2]=coor; 
         size2+=1;
-    }
-    else if(sum==3&&!in(num,arr2,size2)){
-        arr3[size3]=num; 
+    }//&&!in(num,arr2,size2)
+    else if(sum==3){
+        arr3[size3]=coor; 
         size3+=1;
         *score+=1;
     }
-    else if(sum==1&&!in(num,arr2,size2)){
-        arr1[size1]=num; 
+    else if(sum==1&&!in(coor,arr2,size2)){
+        arr1[size1]=coor; 
         size1+=1;
     }
-    else if(sum==0 && !in(num,arr2,size2)){
-        arr0[size0]=num; 
+    else if(sum==0&&!in(coor,arr2,size2)){
+        arr0[size0]=coor; 
         size0+=1;
     }
 }
 
-void check (int i , int j , int n , int m , int data[n][m]){
-    //,int arr0[],int size0,int arr1[],int size1,int arr2[],int size2,int arr3[],int size3,int marr[],int sizem
+void checkf(int i , int j , int n , int m , int data[n][m]){
     int line = i%2;
     int score=0;
     int number_lines=0;
@@ -55,7 +62,7 @@ void check (int i , int j , int n , int m , int data[n][m]){
             switchf(sum,i,j,&score);
         }
 
-        if(i!=n){
+        if(i!=n-1){
             //check the below 3 elements
             int sum = abs(data[i+1][j-1])+abs(data[i+1][j+1])+abs(data[i+2][j]);
             switchf(sum,i,j,&score);
@@ -69,7 +76,7 @@ void check (int i , int j , int n , int m , int data[n][m]){
             switchf(sum,i,j,&score);
         }
         
-        if(j!=m){
+        if(j!=m-1){
             //check the right 3 elements
             int sum = abs(data[i-1][j+1])+abs(data[i+1][j+1])+abs(data[i][j+2]);
             switchf(sum,i,j,&score);
@@ -87,13 +94,18 @@ void fill(int n , int m , int data[n][m]){
     for (int i = 0; i < n; i++){
         for (int j = 0; j < m; j++){
             if(data[i][j]==0){
-                check(i,j,n,m,data);
+                checkf(i,j,n,m,data);
             }
         }  
     }   
 }
 
-int play(int n,int m,int data[n][m]){
+int playf(int n,int m,int data[n][m]){
+    sizem=0;
+    size0=0;
+    size1=0;
+    size2=0;
+    size3=0;
     fill(n,m,data);
     if (sizem>0) {
         if(sizem==1) return marr[0];
@@ -128,6 +140,7 @@ int play(int n,int m,int data[n][m]){
         }
     }
     else if(size2>0){
+
         if(size2==1) return arr2[0];
         else {
             srand(time(NULL));
@@ -136,15 +149,45 @@ int play(int n,int m,int data[n][m]){
         }
     }
 } 
-
+/*
 int main(){
-    int data[5][5] ={{2,1,2,0,2},
-                     {1,2,0,2,0},
+    int data[5][5] ={{2,0,2,0,2},
+                     {0,2,0,2,0},
                      {2,0,2,0,2},
                      {0,2,0,2,0},
                      {2,0,2,0,2}};
+    int sum =0;
+    int y,x;
+    while(sum!=12){
+        for(int i=0;i<5;i++){
+        for(int j=0;j<5;j++){
+            if(abs(data[i][j])==1){
+                sum+=abs(data[i][j]);
+            }
+        }
+    }
 
-    int move = play(5,5,data);
-    printf("%d",move);
+    int move = playf(5,5,data);
+    y=move%10;
+    x=move/10;
+    data[x][y]=1;
+    sum=0;
+    for(int i=0;i<5;i++){
+        for(int j=0;j<5;j++){
+            if(abs(data[i][j])==1){
+                sum+=abs(data[i][j]);
+            }   
+        }
+    }
+
+        for(int i=0;i<5;i++){
+            for(int j=0;j<5;j++){
+                printf("%d ",data[i][j]);
+            }
+            printf("\n");
+        }
+        printf("\n%d\n",sum);
+        system("pause");
+    }
     return 0;
-}
+}*/

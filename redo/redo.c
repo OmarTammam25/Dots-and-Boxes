@@ -26,67 +26,69 @@ void undo(int *g_size,int g_storage[],int *r_size,int r_storage[],int n,int m,in
     /*
     n,m size of grid array
     */
-    r_storage[*r_size]=g_storage[*g_size-1];
-    *r_size+=1;
-    int n_col=abs(g_storage[*g_size-1]%10);
-    //g_storage[*g_size-1]/=10;
-    int n_row=abs(g_storage[*g_size-1]/10);
+    if(*g_size>0){
+        r_storage[*r_size]=g_storage[*g_size-1];
+        *r_size+=1;
+        int n_col=abs(g_storage[*g_size-1]%10);
+        //g_storage[*g_size-1]/=10;
+        int n_row=abs(g_storage[*g_size-1]/10);
 
-    if (grid_array[n_row][n_col]==1) {
-        *turn = 1;
-    }
-    else if (grid_array[n_row][n_col]==-1) {
-        *turn = -1;
-    }
+        if (grid_array[n_row][n_col]==1) {
+            *turn = 1;
+        }
+        else if (grid_array[n_row][n_col]==-1) {
+            *turn = -1;
+        }
 
-    if(n_row%2==0){
-        if(n_row !=0){
-            if(grid_array[n_row-1][n_col]==3){
-                grid_array[n_row-1][n_col]=2;
-                *score2-=1;
+        if(n_row%2==0){
+            if(n_row !=0){
+                if(grid_array[n_row-1][n_col]==3){
+                    grid_array[n_row-1][n_col]=2;
+                    *score2-=1;
+                }
+                else if(grid_array[n_row-1][n_col]==-3){
+                    grid_array[n_row-1][n_col]=2;
+                    *score1-=1;
+                }
             }
-            else if(grid_array[n_row-1][n_col]==-3){
-                grid_array[n_row-1][n_col]=2;
-                *score1-=1;
+            if(n_row !=n-1){
+                if(grid_array[n_row+1][n_col]==3){
+                    grid_array[n_row+1][n_col]=2;
+                    *score2-=1;
+                }
+                else if(grid_array[n_row+1][n_col]==-3){
+                    grid_array[n_row+1][n_col]=2;
+                    *score1-=1;
+                }
             }
         }
-         if(n_row !=n-1){
-            if(grid_array[n_row+1][n_col]==3){
-                grid_array[n_row+1][n_col]=2;
-                *score2-=1;
-            }
-            else if(grid_array[n_row+1][n_col]==-3){
-                grid_array[n_row+1][n_col]=2;
-                *score1-=1;
-            }
-        }
-    }
 
-    if(n_row%2==1){
-        if(n_col !=0){
-            if(grid_array[n_row][n_col-1]==3){
-                grid_array[n_row][n_col-1]=2;
-                *score2-=1;
+        if(n_row%2==1){
+            if(n_col !=0){
+                if(grid_array[n_row][n_col-1]==3){
+                    grid_array[n_row][n_col-1]=2;
+                    *score2-=1;
+                }
+                else if(grid_array[n_row][n_col-1]==-3){
+                    grid_array[n_row][n_col-1]=2;
+                    *score1-=1;
+                }
             }
-            else if(grid_array[n_row][n_col-1]==-3){
-                grid_array[n_row][n_col-1]=2;
-                *score1-=1;
+            if(n_row !=n-1){
+                if(grid_array[n_row][n_col+1]==3){
+                    grid_array[n_row][n_col+1]=2;
+                    *score2-=1;
+                }
+                else if(grid_array[n_row][n_col+1]==-3){
+                    grid_array[n_row][n_col+1]=2;
+                    *score1-=1;
+                }
             }
         }
-         if(n_row !=n-1){
-            if(grid_array[n_row][n_col+1]==3){
-                grid_array[n_row][n_col+1]=2;
-                *score2-=1;
-            }
-            else if(grid_array[n_row][n_col+1]==-3){
-                grid_array[n_row][n_col+1]=2;
-                *score1-=1;
-            }
-        }
+        
+        grid_array[n_row][n_col]=0;
+        *g_size-=1;
     }
-    
-    grid_array[n_row][n_col]=0;
-    *g_size-=1;
 }
 
 int line_ch(int i){
