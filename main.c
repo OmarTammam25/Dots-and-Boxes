@@ -22,6 +22,7 @@ int main(){
         WORD colorF;
         WORD colorB;
         char name[MAX_NAME+1];
+        int numOfMove;
     }player;
     player player1;
     player player2;
@@ -30,7 +31,6 @@ int main(){
     int num_col = 0; //number of dots in each row
     int plyers_num=0;
     int turn = 1;
-    int numOfMove = 0;
     int totalNumberOfLines= 0;
     int rowGridArray;
     int colGridArray;
@@ -46,6 +46,8 @@ int main(){
     int scoresHistory[MAX_USERS] = {0};
     int loadChoice;
     int fileSave;
+    player1.numOfMove = 0;
+    player2.numOfMove = 0;
 
 
     Sleep(500);
@@ -333,6 +335,8 @@ int main(){
     system("cls");
     change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF, player1.colorB, player2.colorB);
     int play = 0;
+
+
     while(!play)
     {
         play = 1;
@@ -343,7 +347,12 @@ int main(){
         if(turn == 1) printf("\nplayer 2 turn\n");
 
         printf("\nwrite 55 to save the game\n");
-        printf("\nPlease enter coordinates of point 1: ");
+        printf("\nplayer 1 score is: %d ", player1.score);
+        printf("\t\t\t\t\t\t\tplayer 2 score is: %d", player2.score);
+        printf("\nplayer 1 total moves: %d ", player1.numOfMove);
+        printf("\t\t\t\t\t\tplayer 2 total moves: %d", player2.numOfMove);
+        
+        printf("\n\nPlease enter coordinates of point 1: ");
         scanf("%d", &row1);
         save_file:
             if(row1 == 55){
@@ -405,9 +414,9 @@ int main(){
         flatten(rowGridArray,colGridArray,gridArray,flatArray);
         system("cls");
         change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
+        if(turn == -1) player1.numOfMove++;  // doesnt work if user inpurs wrong coordinates :(
+        if(turn == 1) player2.numOfMove++;
 
-        printf("player 1 score is: %d ", player1.score);
-        printf("player 2 score is: %d", player2.score);
 
         // check game end
         for (int h=0; h<2*num_row-1;h++){
