@@ -428,14 +428,15 @@ int main(){
             // undo
             else if(row1==22){
                 if(plyers_num==1){
-                    int comp_score=player2.score;
+                    //int comp_score=player2.score;
                     undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-                    undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-                    while(comp_score!=player2.score){
-                        comp_score=player2.score;
+                    //undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    while(g_storage[g_size-1]>0&&g_size!=0){
+                        //comp_score=player2.score;
                         undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                         //undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                     }
+                    undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                     called =1;
                     goto print_grid;
                 }
@@ -448,13 +449,20 @@ int main(){
             // redo
             else if(row1==33){
                 if(plyers_num==1){
-                    int comp_score=player2.score;
+                    int flag=0;
+                    //int comp_score=player2.score;
                     redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-                    redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-                    while(comp_score!=player2.score){
-                        comp_score=player2.score;
+                    //redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    while(r_storage[r_size-1]>0&&r_size!=0){
+                        //comp_score=player2.score;
+                        flag=1;
                         redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                     }
+                    /*
+                    if(flag){
+                        redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                        flag=0;
+                    }   */                 
                     called =1;
                     goto print_grid;
                 }
