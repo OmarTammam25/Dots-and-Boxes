@@ -12,6 +12,7 @@
 #include "redo/redo.c"
 #include "ai_bot/ai.c"
 #include "header files/Rank.h"
+#include "header files/user input errors.h"
 
 #define MAX_NAME 20
 #define MAX_USERS 100
@@ -47,7 +48,6 @@ int main(){
     int i,j; // coord of new line in gridArray
     int save = 1;
     FILE *ptr = NULL;
-    int pWon = 0; // indicates who won
     int numOfGames = 0; // number of games played.
     char userNames[MAX_USERS][MAX_NAME];
     int scoresHistory[MAX_USERS] = {0};
@@ -59,10 +59,6 @@ int main(){
     int r_size=0;
     int g_storage[100];
     int r_storage[100];
-
-    Sleep(500);
-    system("cls");
-
 
 
     char main_menu [4][40]= {"1- Start a new game","2- Load a game","3- Top ten players","4- Exit"};
@@ -109,7 +105,8 @@ int main(){
                 return 0;// Exit the game
                 break;
             default :
-                printf("\t\t\t\tplease enter a valid number between 1-4");
+                printf("\t\t\t\tplease enter a valid number between 1-4\n");
+                fflush(stdin);
                 choice=0;
                 system("pause");
                 goto main_page;
@@ -152,6 +149,17 @@ int main(){
                 //custom input
                 printf("\nEnter number of rows and columns: ");
                 scanf("%d %d", &num_row, &num_col);
+                if(num_row > 15 || num_col >15){
+                    printf("\nThe grid you've chosen is too large, Please select a smaller grid\n");
+                    fflush(stdin);
+                    system("pause");
+                    goto game_conf;
+                }else if(num_row < 3 || num_col <3){
+                    printf("\nThe grid you've chosen is too small, Please select a bigger grid\n");
+                    fflush(stdin);
+                    system("pause");
+                    goto game_conf;                   
+                }
                 choice =0;
                 break;
 
@@ -160,14 +168,15 @@ int main(){
                 system("cls");
                 goto main_page;
             default:
-                printf("\t\t\t\tplease enter a valid number between 1-6");
+                printf("\t\t\t\tplease enter a valid number between 1-6\n");
+                fflush(stdin);
                 choice=0;
-                Sleep(1000);
+                system("pause");
                 goto game_conf;
         }
 
     players_number:
-        //system("cls");
+        system("cls");
         printf("\t\t\t\tgame configuration\n");
         choice=0;
         printf("\t\t\t\tnumber of players\n"); //one or two players
@@ -191,7 +200,8 @@ int main(){
                 choice=0;
                 goto game_conf;
             default:
-                printf("\t\t\t\tplease enter a valid number between 1-3");
+                printf("\t\t\t\tplease enter a valid number between 1-3\n");
+                fflush(stdin);
                 choice=0;
                 system("pause");
                 goto players_number;
@@ -235,6 +245,7 @@ int main(){
                     break;
                 default:
                     printf("please enter num 1 or 2: ");
+                    fflush(stdin);
                     goto color_choice;
             }
     } else
@@ -268,6 +279,7 @@ int main(){
                     break;
                 default:
                     printf("please enter num 1 or 2: ");
+                    fflush(stdin);
                     goto color_choice_2;
             }
     }
@@ -309,7 +321,8 @@ int main(){
             ptr = fopen("saveData3.bin", "rb");
             break;
        default:
-            printf("\n Please  select a number from 1-3: ");
+            printf("\n Please  select a number from 1-3: \n");
+            fflush(stdin);
             system("pause");
             goto load_game;
             break;
@@ -365,9 +378,11 @@ int main(){
             coor=playf(2*num_row-1,2*num_col-1,gridArray);
         }
         else{
+            take_input:
             if(turn == -1) printf("\nplayer 1 turn\n");
             if(turn == 1) printf("\nplayer 2 turn\n");
-
+            
+            fflush(stdin);
             printf("\nwrite 55 to save the game\n");
             printf("\nwrite 22 to undo\n");
             printf("\nwrite 33 to redo\n");
@@ -396,7 +411,8 @@ int main(){
                         fptr = fopen("saveData3.bin", "wb");
                         break;
                     default:
-                        printf("\nEnter a number between 1-3");
+                        printf("\nEnter a number between 1-3\n");
+                        fflush(stdin);
                         goto save_file;
                         break;
                     }
@@ -425,6 +441,7 @@ int main(){
                         continue;
                     }
                 }
+
             // undo
             else if(row1==22){
                 if(plyers_num==1){
@@ -446,6 +463,7 @@ int main(){
                     goto print_grid;
                 }
             }
+
             // redo
             else if(row1==33){
                 if(plyers_num==1){
@@ -476,6 +494,14 @@ int main(){
             printf("Please enter coordinates of point 2: ");
             scanf("%d %d", &row2, &col2);
         }
+        // checks input
+        if( !checkInput(row1, col1, row2, col2, num_row, num_col)){
+            flatten(rowGridArray,colGridArray,gridArray,flatArray);
+            system("cls");
+            change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
+            fflush(stdin);
+            goto take_input;
+        }
 
         // adds the line into the array gridArray
         if(plyers_num==1&&turn==1){
@@ -486,6 +512,14 @@ int main(){
         }
         else{
             i = addLineToArray(num_row, num_col, gridArray, row1, row2, col1, col2, turn);
+            //checks if line has already been played
+            if(i == -1){
+                flatten(rowGridArray,colGridArray,gridArray,flatArray);
+                system("cls");
+                change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
+                fflush(stdin);
+                goto take_input;
+            } 
             j = i%10; // col
             i /= 10; // row
         }
@@ -565,7 +599,6 @@ int main(){
                     fclose(usernames);
                     fclose(scores);
                 }
-                pWon = 1;
                 system("pause");
 
             }else if(player1.score < player2.score){
@@ -617,14 +650,12 @@ int main(){
                         fclose(usernames);
                         fclose(scores);
                     }
-                    pWon = 2;
                 }else{
                     printf("YOU LOST!\n");
                 }
                 system("pause");
             }else{
                 printf("Draw!\n");
-                pWon = 0;
                 system("pause");
 
             }
