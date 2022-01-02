@@ -33,8 +33,10 @@ int addLineToArray(int n, int m, int gridArray[n+n-1][m+m-1],int row1, int row2,
         int col3;
         if(col1>col2){ col3 = col1;}
         else if(col1 < col2) {col3 = col2;}
-        if(gridArray[row1 + row2 -2][2*col3 - 3] == 1){
-            printf("ERROR");
+        if(gridArray[row1 + row2 -2][2*col3 - 3] == 1 || gridArray[row1 + row2 -2][2*col3 - 3] == -1){
+            printf("\n\nERROR! LINE ALREADY SELECTED!\n");
+            system("pause");
+            return -1;
         }else{
             gridArray[row1 + row2 -2][2*col3 - 3] = 1*turn;
             sum = (row1+row2-2) *10;
@@ -46,8 +48,10 @@ int addLineToArray(int n, int m, int gridArray[n+n-1][m+m-1],int row1, int row2,
         int row3;
         if(row1 > row2) {row3 = row1;}
         else if(row1<row2) {row3 = row2;}
-        if(gridArray[2*row3 - 3][col1 + col2 - 2] == 1){
-            printf("ERROR");   // TODO CHECK IN MAIN GAME LOOP 
+        if(gridArray[2*row3 - 3][col1 + col2 - 2] == 1 || gridArray[2*row3 - 3][col1 + col2 - 2] == -1){
+            printf("\n\nERROR! LINE ALREADY SELECTED!\n");
+            system("pause");
+            return -1;
         }else{
             gridArray[2*row3 - 3][col1 + col2 - 2] = 1*turn;    
             sum = (2*row3-3)*10;
