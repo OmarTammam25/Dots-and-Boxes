@@ -22,19 +22,6 @@ int main(){
 // initializing the game
     system("cls");
 
-    FILE *Iptr = NULL;
-    Iptr = fopen("ASCII ART!.txt", "r");
-    if (Iptr == NULL){
-        printf("\t\t\t\tWelcome to dots and boxes game :)\n");
-        system("pause");
-        system("cls");
-    }else{
-        char readImage[128];
-        while(fgets(readImage, sizeof(readImage), Iptr) != NULL){
-            printf("\t\t\t%s", readImage);
-        }
-    }
-
 
 
 
@@ -79,7 +66,7 @@ int main(){
     clock_t begin2 = 0;
     clock_t end1 = 0;
     clock_t end2 = 0;
-
+    FILE *Iptr = NULL;
 
     char main_menu [4][40]= {"1- Start a new game","2- Load a game","3- Top ten players","4- Exit"};
     //char conf_menu[3][40] = {"size of grid","one or two players","players configuration"};
@@ -88,14 +75,33 @@ int main(){
 
     int choice=0;
     main_page:
+
+
+        Iptr = fopen("ASCII ART!.txt", "r");
+        if (Iptr == NULL){
+            printf("\t\t\t\tWelcome to dots and boxes game :)\n");
+            system("pause");
+            system("cls");
+        }else{
+            char readImage[128];
+            setColor(FOREGROUND_RED|FOREGROUND_BLUE);
+            while(fgets(readImage, sizeof(readImage), Iptr) != NULL){
+                printf("\t\t\t%s", readImage);
+            }
+        }
+        fclose(Iptr);
+        setColorDefault();
+
         //printing the main menu elements
         printf("\n\n\n");
         for (int i=0;i<4;i++){
+            setColor(FOREGROUND_GREEN|FOREGROUND_RED);
             printf("%s\n",main_menu[i]);
         }
 
         //user choice
         printf("\n\nchoose the number : ");
+
         scanf("%d",&choice);
         int load = 0;
         switch(choice){
@@ -114,7 +120,7 @@ int main(){
                 break;
             case 3:
                 system("cls");
-                printf("\t\t\t\tTop ten players"); // take hime to top ten players
+                printf("\t\t\t\t\t\tTop ten players\n\n"); // take hime to top ten players
                 // handling Rank of players :)
                 Rank(userNames, scoresHistory);
                 topTen(userNames, scoresHistory);
@@ -244,7 +250,7 @@ int main(){
         fgets(player1.name, MAX_NAME+1, stdin);
         fflush(stdin);
         capitalize(player1.name);
-        printf("Please enter your prefered color:\n");
+        printf("\nPlease enter your prefered color:\n");
         printf("1.Red\n");
         printf("2.Blue\n");
 
@@ -303,7 +309,7 @@ int main(){
                     goto color_choice_2;
             }
     }
-
+    
 
 
 
@@ -378,6 +384,7 @@ int main(){
         load = 1;
     }
     // print grid
+    setColorDefault();
     if(!load) generateGridArray(num_row,num_col, gridArray);
     flatten(rowGridArray,colGridArray,gridArray, flatArray);
     system("cls");
@@ -402,38 +409,63 @@ int main(){
         }
         else{
             take_input:
-            if(turn == -1) printf("\nplayer 1 turn\n");
-            if(turn == 1) printf("\nplayer 2 turn\n");
+            
+            if(turn == -1){
+                setColor(player1.colorF);
+                printf("\nplayer 1 turn\n");
+            } 
+            
+            if(turn == 1){
+                setColor(player2.colorF);
+                printf("\nplayer 2 turn\n");
+            } 
             
             fflush(stdin);
+            setColor(FOREGROUND_RED|FOREGROUND_GREEN);
             printf("\nwrite 55 to save the game");
             printf("\t\t\twrite 22 to undo");
             printf("\t\t\twrite 33 to redo\n");
 
+            setColor(player1.colorF);
             printf("\nplayer 1 score is: %d ", player1.score);
+            setColor(player2.colorF);
             printf("\t\t\t\t\t\t\tplayer 2 score is: %d", player2.score);
+            setColor(player1.colorF);
             printf("\nplayer 1 total moves: %d ", player1.numOfMove);
+            setColor(player2.colorF);
             printf("\t\t\t\t\t\tplayer 2 total moves: %d", player2.numOfMove);
-            
+            setColorDefault();
             // printing time
             if(plyers_num == 1){
-                printf("\nTime passed for player 1: %0.2f", player1.timeSpent);
+                setColor(player1.colorF);
+                printf("\nTime passed for player1: %d:%d", (int)player1.timeSpent/60, (int)player1.timeSpent%60);
+                setColorDefault();
             }else if(plyers_num == 2){
-                printf("\nTime passed for player1: %0.2f", player1.timeSpent);
-                printf("\t\t\t\t\tTime passed for player2: %0.2f", player2.timeSpent);
+                setColor(player1.colorF);
+                printf("\nTime passed for player1: %0.2f:%0.2f", (int)player1.timeSpent/60, (int)player1.timeSpent%60);
+                setColor(player2.colorF);
+                printf("\t\t\t\t\tTime passed for player2: %0.2f:%0.2f", (int)player2.timeSpent/60, (int)player2.timeSpent%60);
+                setColorDefault();
             }
-
+            
+            setColor(FOREGROUND_RED|FOREGROUND_GREEN);
             printf("\n\n\t\t\t\t\tnumber of remaining lines: %d",remain_lines);
-        
+            setColorDefault();
+            if(turn == -1){
+                setColor(player1.colorF);
+            }else if(turn == 1 && plyers_num == 2){
+                setColor(player2.colorF);
+            }
             printf("\n\nPlease enter coordinates of point 1: ");
-
+            
             if(turn == -1) begin1 = clock();
             if(turn == 1) begin2 = clock();
             scanf("%d", &row1);
-
+            setColorDefault();
             save_file:
                 if(row1 == 55){
                     FILE *fptr = NULL;
+                    setColor(FOREGROUND_RED|FOREGROUND_GREEN);
                     printf("\nenter a number between  1-3 to save the game\n");
                     scanf("%d", &fileSave);
                     switch (fileSave)
@@ -473,6 +505,7 @@ int main(){
                         printf("\n Game Saved!\n");
                         system("pause");
                         system("cls");
+                        setColorDefault();
                         change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
                         turn *= -1;
                         play = 0;
@@ -537,11 +570,17 @@ int main(){
                     goto print_grid;
                 }
             }
-
+            if(turn == -1){
+                setColor(player1.colorF);
+            }else if(turn == 1 && plyers_num == 2){
+                setColor(player2.colorF);
+            }
             scanf("%d", &col1);
             fflush(stdin);
             printf("Please enter coordinates of point 2: ");
             scanf("%d %d", &row2, &col2);
+            setColorDefault();
+            
             if(turn == -1){
                 end1 = clock();
                 player1.timeSpent += (double)(end1 - begin1) / CLOCKS_PER_SEC;
@@ -619,7 +658,13 @@ int main(){
         }
         if(play == 1){
             if(player1.score > player2.score){
-                printf("\nPlayer 1 (%s)  won!\n", player1.name);
+                setColor(player1.colorF);
+                printf("\nPlayer 1 won!\n", player1.name);
+                printf("Congratulations %s \n", player1.name);
+                printf("\nScore: %d\n", player1.score);
+                system("pause");
+                setColorDefault();
+
                 FILE *usernames = NULL;
                 FILE *scores = NULL;
                 usernames = fopen("usernames.bin","ab");
@@ -666,11 +711,15 @@ int main(){
                     fclose(usernames);
                     fclose(scores);
                 }
-                system("pause");
 
             }else if(player1.score < player2.score){
                 if(plyers_num == 2){
-                    printf("\nPlayer 2 (%s) won!\n", player2.name);
+                    setColor(player2.colorF);
+                    printf("\nPlayer 2 won!\n");
+                    printf("Congratulations %s \n", player2.name);
+                    printf("\nScore: %d\n", player2.score);
+                    system("pause");
+                    setColorDefault();
                     FILE *usernames = NULL;
                     FILE *scores = NULL;
                     usernames = fopen("usernames.bin","ab");
@@ -718,14 +767,44 @@ int main(){
                         fclose(scores);
                     }
                 }else{
+                    setColor(FOREGROUND_RED|FOREGROUND_GREEN);
                     printf("YOU LOST!\n");
+                    system("pause");
+                    setColorDefault();
                 }
-                system("pause");
             }else{
+                setColor(FOREGROUND_RED|FOREGROUND_GREEN);
                 printf("Draw!\n");
+                setColorDefault();
                 system("pause");
 
             }
+
+            // print leaderboard.
+                setColor(FOREGROUND_RED|FOREGROUND_GREEN);
+                printf("\t\t\t\t\t\tTop ten players\n\n");
+                Rank(userNames, scoresHistory);
+                printf("\n");
+                topTen(userNames, scoresHistory);
+                printf("\n\n type 0 to exit the game, or type 1 to return to main menu\n");
+                int endGameChoice = 0;
+                final:
+                scanf("%d", &endGameChoice);
+                switch (endGameChoice)
+                {
+                case 1:
+                    system("cls");
+                    goto main_page;
+                    break;
+                case 0:
+                    return 0;
+                
+                default:
+                    printf("\nplease enter 0 or 1\n");
+                    fflush(stdin);
+                    goto final;
+                    break;
+                }
         }
     }
     return 0;

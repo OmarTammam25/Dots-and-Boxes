@@ -60,6 +60,7 @@ void topTen(char usernames[][20], int scores[]){
     // prints leaderboard
     for (int i = 0; i < n; i++)
     {
+        if(i == 10) break;
         printf("\n%d- %s Score: %d\n",(i+1), usernames[i], scores[i]);
     }
     
