@@ -388,10 +388,12 @@ int main(){
             printf("\nwrite 55 to save the game");
             printf("\t\t\twrite 22 to undo");
             printf("\t\t\twrite 33 to redo\n");
+
             printf("\nplayer 1 score is: %d ", player1.score);
             printf("\t\t\t\t\t\t\tplayer 2 score is: %d", player2.score);
             printf("\nplayer 1 total moves: %d ", player1.numOfMove);
             printf("\t\t\t\t\t\tplayer 2 total moves: %d", player2.numOfMove);
+
             printf("\n\t\t\tnumber of remaining lines: %d",remain_lines);
             
             printf("\n\nPlease enter coordinates of point 1: ");
@@ -441,6 +443,7 @@ int main(){
                         change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
                         turn *= -1;
                         play = 0;
+                        row1 = -1;
                         continue;
                     }
                 }
@@ -465,11 +468,15 @@ int main(){
                         //flag=0;
                     //}
                     called =1;
+                    row1 = -1;
+                    fflush(stdin);
                     goto print_grid;
                 }
                 else{
                     undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                     called =1;
+                    row1 = -1;
+                    fflush(stdin);
                     goto print_grid;
                 }
             }
@@ -484,19 +491,25 @@ int main(){
                         redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                     }                
                     called =1;
+                    row1 = -1;
+                    fflush(stdin);
                     goto print_grid;
                 }
                 else{
                     redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                     called =1;
+                    row1 = -1;
+                    fflush(stdin); 
                     goto print_grid;
                 }
             }
+
             scanf("%d", &col1);
+            fflush(stdin);
             printf("Please enter coordinates of point 2: ");
             scanf("%d %d", &row2, &col2);
         }
-        // checks input
+         // checks input
         if( !checkInput(row1, col1, row2, col2, num_row, num_col)){
             flatten(rowGridArray,colGridArray,gridArray,flatArray);
             system("cls");
