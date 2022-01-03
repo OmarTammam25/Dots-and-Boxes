@@ -50,7 +50,6 @@ void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2,WORD cr1_bg, WORD cr2
         if(i==0){
                 for(int z=0;z<m;z++){
                     z==0?printf("\t\t\t\t\t\t\t  %d    ",c_count++):printf("%d    ",c_count++);
-                    
                 }
                 printf("\n");
             }

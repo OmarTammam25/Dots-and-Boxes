@@ -364,6 +364,8 @@ int main(){
     int play = 0;
     int called =0;
     int coor;
+    int total_lines=2* num_row*num_col - num_row - num_col;
+    int remain_lines =0;
 
     while(!play)
     {
@@ -383,13 +385,14 @@ int main(){
             if(turn == 1) printf("\nplayer 2 turn\n");
             
             fflush(stdin);
-            printf("\nwrite 55 to save the game\n");
-            printf("\nwrite 22 to undo\n");
-            printf("\nwrite 33 to redo\n");
+            printf("\nwrite 55 to save the game");
+            printf("\t\t\twrite 22 to undo");
+            printf("\t\t\twrite 33 to redo\n");
             printf("\nplayer 1 score is: %d ", player1.score);
             printf("\t\t\t\t\t\t\tplayer 2 score is: %d", player2.score);
             printf("\nplayer 1 total moves: %d ", player1.numOfMove);
             printf("\t\t\t\t\t\tplayer 2 total moves: %d", player2.numOfMove);
+            printf("\n\t\t\tnumber of remaining lines: %d",remain_lines);
             
             printf("\n\nPlease enter coordinates of point 1: ");
             scanf("%d", &row1);
@@ -445,15 +448,22 @@ int main(){
             // undo
             else if(row1==22){
                 if(plyers_num==1){
-                    //int comp_score=player2.score;
-                    undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-                    //undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-                    while(g_storage[g_size-1]>0&&g_size!=0){
-                        //comp_score=player2.score;
+                    //int flag=0;
+                    //if(g_storage[g_size-1]<0){
                         undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-                        //undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    //}
+                    /*
+                    else {
+                        undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                        flag=1;
+                    }*/
+                    while(g_storage[g_size-1]>0&&g_size!=0){
+                        undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                     }
-                    undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    //if(flag){
+                        undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                        //flag=0;
+                    //}
                     called =1;
                     goto print_grid;
                 }
@@ -468,19 +478,11 @@ int main(){
             else if(row1==33){
                 if(plyers_num==1){
                     int flag=0;
-                    //int comp_score=player2.score;
                     redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-                    //redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                     while(r_storage[r_size-1]>0&&r_size!=0){
-                        //comp_score=player2.score;
                         flag=1;
                         redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-                    }
-                    /*
-                    if(flag){
-                        redo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-                        flag=0;
-                    }   */                 
+                    }                
                     called =1;
                     goto print_grid;
                 }
@@ -539,12 +541,14 @@ int main(){
             change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
             player1.numOfMove=0;
             player2.numOfMove=0;
+            remain_lines=0;
             for(int i_row=0;i_row<rowGridArray;i_row++){
                 for (int j_col = 0; j_col <colGridArray ; j_col++)
                 {
                     if(gridArray[i_row][j_col]==-1)player1.numOfMove++;
                     else if(gridArray[i_row][j_col]==1)player2.numOfMove++;        
-                    }
+                }
+                remain_lines=total_lines-player1.numOfMove-player2.numOfMove;
                 
             }
 
