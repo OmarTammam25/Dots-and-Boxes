@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+
 #include "header files/colors.h"
 #include "header files/lines array.h"
 #include "header files/grid_code.h"
@@ -20,9 +21,22 @@
 int main(){
 // initializing the game
     system("cls");
-    printf("\t\t\t\tWelcome to dots and boxes game :)\n");
-    system("pause");
-    system("cls");
+
+    FILE *Iptr = NULL;
+    Iptr = fopen("ASCII ART!.txt", "r");
+    if (Iptr == NULL){
+        printf("\t\t\t\tWelcome to dots and boxes game :)\n");
+        system("pause");
+        system("cls");
+    }else{
+        char readImage[128];
+        while(fgets(readImage, sizeof(readImage), Iptr) != NULL){
+            printf("\t\t\t%s", readImage);
+        }
+    }
+
+
+
 
     // Initialize variables
     typedef struct{
@@ -31,6 +45,7 @@ int main(){
         WORD colorB;
         char name[MAX_NAME+1];
         int numOfMove;
+        double timeSpent;
     }player;
     player player1;
     player player2;
@@ -59,6 +74,11 @@ int main(){
     int r_size=0;
     int g_storage[100];
     int r_storage[100];
+    int remain_lines =0;
+    clock_t begin1 = 0;
+    clock_t begin2 = 0;
+    clock_t end1 = 0;
+    clock_t end2 = 0;
 
 
     char main_menu [4][40]= {"1- Start a new game","2- Load a game","3- Top ten players","4- Exit"};
@@ -69,7 +89,7 @@ int main(){
     int choice=0;
     main_page:
         //printing the main menu elements
-        system("cls");
+        printf("\n\n\n");
         for (int i=0;i<4;i++){
             printf("%s\n",main_menu[i]);
         }
@@ -341,7 +361,8 @@ int main(){
         fread(&player1, sizeof(player), 1, ptr);
         fread(&player2, sizeof(player), 1, ptr);
         fread(&plyers_num, sizeof(int), 1, ptr);
-        fread(&g_size, sizeof(int), 1, ptr);  
+        fread(&g_size, sizeof(int), 1, ptr);
+        fread(&remain_lines, sizeof(int), 1, ptr);  
         fread(&g_storage, sizeof(int), sizeof(g_storage), ptr);
         turn *= -1;
    }else{
@@ -365,7 +386,7 @@ int main(){
     int called =0;
     int coor;
     int total_lines=2* num_row*num_col - num_row - num_col;
-    int remain_lines =0;
+    
 
     while(!play)
     {
@@ -393,10 +414,21 @@ int main(){
             printf("\t\t\t\t\t\t\tplayer 2 score is: %d", player2.score);
             printf("\nplayer 1 total moves: %d ", player1.numOfMove);
             printf("\t\t\t\t\t\tplayer 2 total moves: %d", player2.numOfMove);
-
-            printf("\n\t\t\tnumber of remaining lines: %d",remain_lines);
             
+            // printing time
+            if(plyers_num == 1){
+                printf("\nTime passed for player 1: %0.2f", player1.timeSpent);
+            }else if(plyers_num == 2){
+                printf("\nTime passed for player1: %0.2f", player1.timeSpent);
+                printf("\t\t\t\t\tTime passed for player2: %0.2f", player2.timeSpent);
+            }
+
+            printf("\n\n\t\t\t\t\tnumber of remaining lines: %d",remain_lines);
+        
             printf("\n\nPlease enter coordinates of point 1: ");
+
+            if(turn == -1) begin1 = clock();
+            if(turn == 1) begin2 = clock();
             scanf("%d", &row1);
 
             save_file:
@@ -434,6 +466,7 @@ int main(){
                         fwrite(&player2, sizeof(player), 1, fptr);
                         fwrite(&plyers_num, sizeof(int), 1, fptr);
                         fwrite(&g_size, sizeof(int), 1, fptr);  
+                        fwrite(&remain_lines, sizeof(int), 1, fptr);  
                         fwrite(&g_storage, sizeof(int), sizeof(g_storage), fptr);
                         fwrite(&gridArray, sizeof(int), sizeof(gridArray), fptr);
                         fclose(fptr);
@@ -462,8 +495,9 @@ int main(){
                     }*/
                     while(g_storage[g_size-1]>0&&g_size!=0){
                         undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                        //flag = 1;
                     }
-                    //if(flag){
+                   // if(flag){
                         undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                         //flag=0;
                     //}
@@ -508,6 +542,14 @@ int main(){
             fflush(stdin);
             printf("Please enter coordinates of point 2: ");
             scanf("%d %d", &row2, &col2);
+            if(turn == -1){
+                end1 = clock();
+                player1.timeSpent += (double)(end1 - begin1) / CLOCKS_PER_SEC;
+            } 
+            if(turn == 1){
+                end2 = clock();
+                player2.timeSpent += (double)(end2 - begin2) / CLOCKS_PER_SEC;
+            } 
         }
          // checks input
         if( !checkInput(row1, col1, row2, col2, num_row, num_col)){
