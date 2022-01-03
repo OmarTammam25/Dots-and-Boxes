@@ -537,8 +537,16 @@ int main(){
             flatten(rowGridArray,colGridArray,gridArray,flatArray);
             system("cls");
             change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid
-            if(turn == -1) player1.numOfMove++;  // doesnt work if user inpurs wrong coordinates :(
-            if(turn == 1) player2.numOfMove++;
+            player1.numOfMove=0;
+            player2.numOfMove=0;
+            for(int i_row=0;i_row<rowGridArray;i_row++){
+                for (int j_col = 0; j_col <colGridArray ; j_col++)
+                {
+                    if(gridArray[i_row][j_col]==-1)player1.numOfMove++;
+                    else if(gridArray[i_row][j_col]==1)player2.numOfMove++;        
+                    }
+                
+            }
 
 
         // check game end
