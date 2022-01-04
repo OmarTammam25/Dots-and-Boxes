@@ -17,10 +17,7 @@ void setColorL(WORD x){
 }
 
 void setColorDefault(){
-    WORD default_dos_color = FOREGROUND_RED |
-						 FOREGROUND_GREEN |
-						 FOREGROUND_BLUE |
-						 FOREGROUND_INTENSITY;
+    WORD default_dos_color = FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_INTENSITY;
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),default_dos_color);
 }
 

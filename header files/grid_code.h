@@ -46,6 +46,7 @@ void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2,WORD cr1_bg, WORD cr2
     int c=0; // counter for the data structure
     int c_count=1;
     int r_count=1;
+    setColor(7);
     for(int i=0;i<n;i++){
         if(i==0){
                 for(int z=0;z<m;z++){
@@ -59,12 +60,12 @@ void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2,WORD cr1_bg, WORD cr2
                 if(data[c]<0){
                     setColorL(cr1);
                     printf("%c%c%c%c",data[c++]*-1,data[c]*-1,data[c]*-1,data[c]*-1); //print horizontal line if exist in the data structure with color -1
-                    setColorDefault();
+                    setColor(7);
                 }
                 else{ 
                     setColorL(cr2);
                     printf("%c%c%c%c",data[c++],data[c],data[c],data[c]); //print horizontal line if exist in the data structure with color 1
-                    setColorDefault();
+                    setColor(7);
                 }
             }
         }
@@ -76,24 +77,24 @@ void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2,WORD cr1_bg, WORD cr2
                     setColorL(cr1);
 
                     printf("%c",data[c++]*-1); // printing vertical line if exist in the data structure with color -1
-                    setColorDefault();
+                    setColor(7);
                 }
                 else {
                     setColorL(cr2);
                     printf("%c",data[c++]*1); // printing vertical line if exist in the data structure with color 1
-                    setColorDefault();
+                    setColor(7);
                 }
                 // for printing space between vert lines
                 //TODO  if a square then it prints a colored space :)
                 if(data[c] == 3 && j!=m-1){
                     setColorL(cr2_bg);
                     printf("    ");
-                    setColorDefault();
+                    setColor(7);
                     c++;
                 }else if(data[c] == -3 && j!=m-1){
                     setColorL(cr1_bg);
                     printf("    ");
-                    setColorDefault();
+                    setColor(7);
                     c++;                    
                 } else if(data[c] == 2 && j!=m-1){
                     printf("    ");
