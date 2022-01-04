@@ -57,12 +57,12 @@ void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2,WORD cr1_bg, WORD cr2
             j==0?printf("\t\t\t\t\t\t\t%d %c",r_count++,dot):printf("%c",dot);
             if(j!=m-1){
                 if(data[c]<0){
-                    setColor(cr1);
+                    setColorL(cr1);
                     printf("%c%c%c%c",data[c++]*-1,data[c]*-1,data[c]*-1,data[c]*-1); //print horizontal line if exist in the data structure with color -1
                     setColorDefault();
                 }
                 else{ 
-                    setColor(cr2);
+                    setColorL(cr2);
                     printf("%c%c%c%c",data[c++],data[c],data[c],data[c]); //print horizontal line if exist in the data structure with color 1
                     setColorDefault();
                 }
@@ -73,25 +73,25 @@ void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2,WORD cr1_bg, WORD cr2
             for(int j=0;j<m;j++){
                 if(j==0)printf("\t\t\t\t\t\t\t  ");
                 if(data[c]<0){
-                    setColor(cr1);
+                    setColorL(cr1);
 
                     printf("%c",data[c++]*-1); // printing vertical line if exist in the data structure with color -1
                     setColorDefault();
                 }
                 else {
-                    setColor(cr2);
+                    setColorL(cr2);
                     printf("%c",data[c++]*1); // printing vertical line if exist in the data structure with color 1
                     setColorDefault();
                 }
                 // for printing space between vert lines
                 //TODO  if a square then it prints a colored space :)
                 if(data[c] == 3 && j!=m-1){
-                    setColor(cr2_bg);
+                    setColorL(cr2_bg);
                     printf("    ");
                     setColorDefault();
                     c++;
                 }else if(data[c] == -3 && j!=m-1){
-                    setColor(cr1_bg);
+                    setColorL(cr1_bg);
                     printf("    ");
                     setColorDefault();
                     c++;                    

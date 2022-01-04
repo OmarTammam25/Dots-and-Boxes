@@ -47,12 +47,12 @@ void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2){
             printf("%c",dot);
             if(j!=m-1){
                 if(data[c]<0){
-                    setColor(cr1);
+                    setColorL(cr1);
                     printf("%c%c",data[c++]*-1,data[c]*-1); //print horizontal line if exist in the data structure with color -1
                     setColorDefault();
                 }
                 else{ 
-                    setColor(cr2);
+                    setColorL(cr2);
                     printf("%c%c",data[c++],data[c]); //print horizontal line if exist in the data structure with color 1
                     setColorDefault();
                 }
@@ -62,12 +62,12 @@ void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2){
         if(i!=n-1){ // for not printing vertical lines after the last row of dots
             for(int j=0;j<m;j++){
                 if(data[c]<0){
-                    setColor(cr1);
+                    setColorL(cr1);
                     printf("%c",data[c++]*-1); // printing vertical line if exist in the data structure with color -1
                     setColorDefault();
                 }
                 else {
-                    setColor(cr2);
+                    setColorL(cr2);
                     printf("%c",data[c++]*1); // printing vertical line if exist in the data structure with color 1
                     setColorDefault();
                 }

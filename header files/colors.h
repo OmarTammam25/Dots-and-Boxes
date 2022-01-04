@@ -4,6 +4,15 @@ void setColor(WORD x){
 							 FOREGROUND_GREEN |
 							 FOREGROUND_BLUE |
 							 FOREGROUND_INTENSITY;
+    SetConsoleTextAttribute(output_handle,x|FOREGROUND_INTENSITY);
+}
+
+void setColorL(WORD x){
+    HANDLE output_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    WORD default_dos_color = FOREGROUND_RED |
+							 FOREGROUND_GREEN |
+							 FOREGROUND_BLUE |
+							 FOREGROUND_INTENSITY;
     SetConsoleTextAttribute(output_handle,x);
 }
 
