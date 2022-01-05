@@ -7,13 +7,14 @@
 #include <string.h>
 
 #include "header files/colors.h"
+#include "header files/user input errors.h"
 #include "header files/lines array.h"
 #include "header files/grid_code.h"
 #include "header files/check_function.h"
 #include "redo/redo.c"
 #include "ai_bot/ai.c"
 #include "header files/Rank.h"
-#include "header files/user input errors.h"
+
 
 #define MAX_NAME 20
 #define MAX_USERS 100
@@ -126,7 +127,7 @@ int main(){
                     }
                 }
                 fclose(Iptr);
-setColorDefault();                // handling Rank of players :)
+                setColorDefault();         // handling Rank of players :)
                 Rank(userNames, scoresHistory);
                 topTen(userNames, scoresHistory);
                 system("pause");
@@ -589,10 +590,11 @@ setColorDefault();                // handling Rank of players :)
             // undo
             else if(row1==22){
                 if(plyers_num==1){
-                    //int flag=0;
-                    //if(g_storage[g_size-1]<0){
+                    int flag=0;
+                    if(g_storage[g_size-1]<0){
                         undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-                    //}
+                        undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
+                    }
                     /*
                     else {
                         undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
@@ -600,12 +602,12 @@ setColorDefault();                // handling Rank of players :)
                     }*/
                     while(g_storage[g_size-1]>0&&g_size!=0){
                         undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-                        //flag = 1;
+                        flag = 1;
                     }
-                   // if(flag){
+                    if(flag){
                         undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
-                        //flag=0;
-                    //}
+                        flag=0;
+                    }
                     called =1;
                     row1 = -1;
                     fflush(stdin);
@@ -649,9 +651,10 @@ setColorDefault();                // handling Rank of players :)
             }
             scanf("%d", &col1);
             fflush(stdin);
-            printf("Please enter coordinates of point 2: ");
-            scanf("%d %d", &row2, &col2);
             setColorDefault();
+            printf(" Please enter coordinates of point 2: ");
+            scanf("%d %d", &row2, &col2);
+            
             
             if(turn == -1){
                 end1 = clock();
@@ -673,13 +676,11 @@ setColorDefault();                // handling Rank of players :)
 
         // adds the line into the array gridArray
         if(plyers_num==1&&turn==1){
-            i = coor;
-            j = i%10; // col
-            i /= 10; // row
+            decode(&i,&j,coor);
             gridArray[i][j]=1;
         }
         else{
-            i = addLineToArray(num_row, num_col, gridArray, row1, row2, col1, col2, turn);
+            coor = addLineToArray(num_row, num_col, gridArray, row1, row2, col1, col2, turn);
             //checks if line has already been played
             if(i == -1){
                 flatten(rowGridArray,colGridArray,gridArray,flatArray);
@@ -688,8 +689,7 @@ setColorDefault();                // handling Rank of players :)
                 fflush(stdin);
                 goto take_input;
             } 
-            j = i%10; // col
-            i /= 10; // row
+            decode(&i,&j,coor);
         }
         //test store
         g_size=store(g_size,g_storage,i,j,turn);
@@ -839,19 +839,22 @@ setColorDefault();                // handling Rank of players :)
                         fclose(scores);
                     }
                 }else{
-    setColorDefault();                    printf("YOU LOST!\n");
+                    setColorDefault();                    
+                    printf("YOU LOST!\n");
                     system("pause");
                     setColorDefault();
                 }
             }else{
-setColorDefault();                printf("Draw!\n");
+                setColorDefault();                
+                printf("Draw!\n");
                 setColorDefault();
                 system("pause");
 
             }
 
             // print leaderboard.
-setColorDefault();                printf("\t\t\t\t\t\tTop ten players\n\n");
+                setColorDefault();                
+                printf("\t\t\t\t\t\tTop ten players\n\n");
                 Rank(userNames, scoresHistory);
                 printf("\n");
                 topTen(userNames, scoresHistory);
@@ -867,7 +870,6 @@ setColorDefault();                printf("\t\t\t\t\t\tTop ten players\n\n");
                     break;
                 case 0:
                     return 0;
-                
                 default:
                     printf("\nplease enter 0 or 1\n");
                     fflush(stdin);

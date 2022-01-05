@@ -31,7 +31,8 @@ int in (int number,int array[],int size){
 }
 
 void switchf(int sum,int i,int j,int*score ){
-    int coor =i*10+j;
+    //int coor =i*10+j;
+    int coor=encode(i,j);
     if(sum==2){
         arr2[size2]=coor; 
         size2+=1;
@@ -84,7 +85,8 @@ void checkf(int i , int j , int n , int m , int data[n][m]){
     }
 
     if(score==2){
-        marr[sizem]=i*10+j;
+        //marr[sizem]=i*10+j;
+        marr[sizem]=encode(i,j);
         sizem+=1;
         score=0;
     }

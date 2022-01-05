@@ -18,7 +18,7 @@ int store(int size ,int storage[],int n_row,int n_col,int turn){
 
     it return the new size of the storage array
     */
-   storage[size++]=(n_row*10+n_col)*turn;
+   storage[size++]=(encode(n_row,n_col))*turn;
    return size;
 }
 
@@ -29,10 +29,12 @@ void undo(int *g_size,int g_storage[],int *r_size,int r_storage[],int n,int m,in
     if(*g_size>0){
         r_storage[*r_size]=g_storage[*g_size-1];
         *r_size+=1;
+        decode(&n_col,&n_row,g_storage[*g_size-1]);
+        /*
         int n_col=abs(g_storage[*g_size-1]%10);
         //g_storage[*g_size-1]/=10;
         int n_row=abs(g_storage[*g_size-1]/10);
-
+        */
         if (grid_array[n_row][n_col]==1) {
             *turn = 1;
         }
@@ -89,17 +91,6 @@ void undo(int *g_size,int g_storage[],int *r_size,int r_storage[],int n,int m,in
         grid_array[n_row][n_col]=0;
         *g_size-=1;
     }
-}
-
-int line_ch(int i){
-    /*
-    to check if the line is vertical or horizontal
-    
-    parameters:
-    i -> the row index of the move 
-    */
-   if(i%2==0) return 0; //hor=0
-   else return 1; //ver =1
 }
 
 int check(int i , int j , int n , int m , int data[n][m],int turn){
@@ -159,9 +150,12 @@ void redo(int *g_size,int g_storage[],int *r_size,int r_storage[],int n,int m,in
         int value;
         g_storage[*g_size]=r_storage[*r_size-1];
         *g_size+=1;
+        decode(&n_col,&n_row,r_storage[*r_size-1]);
+        /*
         int n_col=abs(r_storage[*r_size-1]%10);
         //r_storage[*r_size-1]/=10;
         int n_row=abs(r_storage[*r_size-1]/10);
+        */
         value=r_storage[*r_size-1]/abs(r_storage[*r_size-1]);
 
         if(*r_size>1){
@@ -169,9 +163,11 @@ void redo(int *g_size,int g_storage[],int *r_size,int r_storage[],int n,int m,in
         }
         else if(*r_size=1){
             int coord=g_storage[*g_size-1];
+            decode(&ng_row,&ng_col,coord);
+            /*
             int ng_col=abs(coord%10);
             coord/=10;
-            int ng_row=abs(coord);
+            int ng_row=abs(coord);*/
             
             if(check(ng_row,ng_col,n, m, grid_array,*turn))
                 *turn =g_storage[*g_size-1]/abs(g_storage[*g_size-1]);
