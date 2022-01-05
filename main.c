@@ -195,7 +195,7 @@ int main(){
                 //custom input
                 printf("\nEnter number of rows and columns: ");
                 scanf("%d %d", &num_row, &num_col);
-                if(num_row > 15 || num_col >15){
+                if(num_row > 9 || num_col >9){
                     printf("\nThe grid you've chosen is too large, Please select a smaller grid\n");
                     fflush(stdin);
                     system("pause");
@@ -682,7 +682,7 @@ int main(){
         else{
             coor = addLineToArray(num_row, num_col, gridArray, row1, row2, col1, col2, turn);
             //checks if line has already been played
-            if(i == -1){
+            if(coor == -1){
                 flatten(rowGridArray,colGridArray,gridArray,flatArray);
                 system("cls");
                 change_grid(num_row,num_col, flatArray, player1.colorF, player2.colorF,player1.colorB, player2.colorB); // updates the grid

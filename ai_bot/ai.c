@@ -4,17 +4,16 @@
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
-#include <windows.h>
 */
-int arr0[100];
+int arr0[400];
 int size0;
-int arr1[100];
+int arr1[400];
 int size1;
-int arr2[100];
+int arr2[400];
 int size2;
-int arr3[100];
+int arr3[400];
 int size3;
-int marr[100];
+int marr[400];
 int sizem;
 
 void zerof(int size,int array[size]){
