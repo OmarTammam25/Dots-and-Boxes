@@ -15,6 +15,7 @@ int encode (int i,int j){
 }
 
 void decode(int *i,int *j,int coor ){
+    coor=abs(coor);
     *j=coor%10;
     coor/=10;
     if(coor%10!=0){
@@ -26,6 +27,7 @@ void decode(int *i,int *j,int coor ){
     coor/=10;
     if(coor%10!=0){
         *i+=(coor%10)*10;
+
     }
 }
 

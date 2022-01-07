@@ -23,13 +23,14 @@ int store(int size ,int storage[],int n_row,int n_col,int turn){
 }
 
 void undo(int *g_size,int g_storage[],int *r_size,int r_storage[],int n,int m,int grid_array[n][m],int *turn,int *score1,int *score2){
+    int n_row,n_col;
     /*
     n,m size of grid array
     */
     if(*g_size>0){
         r_storage[*r_size]=g_storage[*g_size-1];
         *r_size+=1;
-        decode(&n_col,&n_row,g_storage[*g_size-1]);
+        decode(&n_row,&n_col,g_storage[*g_size-1]);
         /*
         int n_col=abs(g_storage[*g_size-1]%10);
         //g_storage[*g_size-1]/=10;
@@ -146,11 +147,13 @@ int check(int i , int j , int n , int m , int data[n][m],int turn){
 }
 
 void redo(int *g_size,int g_storage[],int *r_size,int r_storage[],int n,int m,int grid_array[n][m],int *turn,int *score1,int *score2){
+    int n_row,n_col;
+    int ng_row,ng_col;
     if(*r_size>0){
         int value;
         g_storage[*g_size]=r_storage[*r_size-1];
         *g_size+=1;
-        decode(&n_col,&n_row,r_storage[*r_size-1]);
+        decode(&n_row,&n_col,r_storage[*r_size-1]);
         /*
         int n_col=abs(r_storage[*r_size-1]%10);
         //r_storage[*r_size-1]/=10;

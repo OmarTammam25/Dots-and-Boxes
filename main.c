@@ -11,8 +11,8 @@
 #include "header files/lines array.h"
 #include "header files/grid_code.h"
 #include "header files/check_function.h"
-#include "redo/redo.c"
-#include "ai_bot/ai.c"
+#include "header files/redo.h"
+#include "header files/ai.c"
 #include "header files/Rank.h"
 
 
@@ -591,7 +591,7 @@ int main(){
             else if(row1==22){
                 if(plyers_num==1){
                     int flag=0;
-                    if(g_storage[g_size-1]<0){
+                    if(g_storage[g_size-1]<0&&g_storage[g_size-2]>0){
                         undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                         undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                     }
@@ -604,10 +604,10 @@ int main(){
                         undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                         flag = 1;
                     }
-                    if(flag){
+                    //if(flag){
                         undo(&g_size,g_storage,&r_size,r_storage,2*num_row-1,2*num_col-1,gridArray,&turn,&player1.score,&player2.score);
                         flag=0;
-                    }
+                    //}
                     called =1;
                     row1 = -1;
                     fflush(stdin);
@@ -731,7 +731,7 @@ int main(){
         if(play == 1){
             if(player1.score > player2.score){
                 setColor(player1.colorF);
-                printf("\nPlayer 1 won!\n", player1.name);
+                printf("\nPlayer 1 won!\n");
                 printf("Congratulations %s \n", player1.name);
                 printf("\nScore: %d\n", player1.score);
                 system("pause");
