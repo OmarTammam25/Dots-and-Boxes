@@ -12,7 +12,7 @@
 #include "header files/grid_code.h"
 #include "header files/check_function.h"
 #include "header files/redo.h"
-#include "header files/ai.c"
+#include "header files/ai.h"
 #include "header files/Rank.h"
 
 
