@@ -866,6 +866,26 @@ int main(){
                 {
                 case 1:
                     system("cls");
+                    player1.score =0;
+                    player1.colorF = 0;
+                    player1.colorB = 0;
+                    player1.numOfMove = 0;
+                    player1.timeSpent = 0;
+                    player2.score =0;
+                    player2.colorF = 0;
+                    player2.colorB = 0;
+                    player2.numOfMove = 0;
+                    player2.timeSpent = 0;
+                    num_row = 0;
+                    num_col = 0;
+                    plyers_num = 0;
+                    turn = 1;
+                    rowGridArray = 0;
+                    colGridArray = 0;
+                    i = 0;
+                    j = 0;
+                    total_lines = 0;
+
                     goto main_page;
                     break;
                 case 0:

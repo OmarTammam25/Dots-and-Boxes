@@ -53,7 +53,12 @@ int check_squares(int i , int j , int n , int m , int data[n][m], int *turn){
         sum = abs(data[i+1][j-1])+abs(data[i+1][j+1])+abs(data[i+2][j]);
         if(sum == 3&&i!=n-1){
             score++;
-            if(data[i-1][j] == 3 || data[i-1][j] == -3) *turn *= -1;
+            if(data[i-1][j] == 3 || data[i-1][j] == -3){
+                if((i-1) > 0){
+                    *turn *= -1;
+                }
+                
+            } 
             data[i+1][j] =3*(*turn);
             sum = 0;
             *turn *= -1;
@@ -75,7 +80,12 @@ int check_squares(int i , int j , int n , int m , int data[n][m], int *turn){
         sum = abs(data[i-1][j+1])+abs(data[i+1][j+1])+abs(data[i][j+2]);
         if(sum == 3&&j!=m-1){
             score++;
-            if(data[i][j-1] == 3 ||data[i][j-1] == -3 ) *turn *= -1;
+            if(data[i][j-1] == 3 ||data[i][j-1] == -3){
+                if( j-1 >= 0) {
+                    *turn *= -1;
+                }
+                
+            } 
             data[i][j+1] = 3* (*turn);
             sum = 0;
             *turn *= -1;
