@@ -8,29 +8,18 @@
  repo for 1st term final project  
 ## to do : 
 
- 1- 
-
- 6- handle user input errors :(  
+  DONE!!! 
 
 ## un done :
- 1- size of font to display the grid  
- 2- make grid centered
- 3- config file for new users (get user name )  
- 4- load from main menu
- 5- 
- 6-   
- 7- undo , redo , save  
- 8- user interface (turn , time , score , number of mover of each player , number of remaining lines) 
- 9- handling the rank and top ten   and displaying them in main menu
- 10-
 
+ DONE!!!!
 
-## bouns:  
+## bonus:  
  1- gui  
 
 
 ## done:
- 1- data stracture
+ 1- data structure
  2- dynamic data structure  
  3- flatten fun
  4- grid for dynamic dots
@@ -38,6 +27,12 @@
  6- user input method  
  7- game setup (size of grid , 2 players or one , choosing colors)  
  8- if a square is made make the user play one more turn!!  
- 9- bot player  
- 10- saving info to a file ( choose between txt, json, excel sheet)   
- 11-ai  
+ 9- bot player    
+ 10- saving info to a file ( choose between txt, json, excel sheet)     
+ 11- ai   
+ 12- make grid centered    
+ 13- config file for new users (get user name )    
+ 14- load from main menu     
+ 18- undo , redo , save    
+ 19- user interface (turn , time , score , number of mover of each player , number of remaining lines)   
+ 20- handling the rank and top ten   and displaying them in main menu  
