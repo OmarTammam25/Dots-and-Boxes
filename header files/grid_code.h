@@ -130,39 +130,3 @@ void change_grid(int n,int m ,int data[],WORD cr1,WORD cr2,WORD cr1_bg, WORD cr2
     printf("\n");
 }
 
-
-/* 
- int main(){
-// the data must be in one dimension form of size (2*m*n - m - n)
-//and having one value of the 3 (' ' , hor , ver)
-
-//example:
-
-    
-int data[5][5] ={{2,0,2,0,2},
-                 {0,2,0,2,0},
-                 {2,0,2,0,2},
-                 {0,2,0,2,0},
-                 {2,0,2,0,2}};
-    int flat_data[16];//number of lines
-
-    flatten(5,5,data,flat_data); //size of data structure
-
-    for (int i = 0; i < 40 ; i++)
-    {
-        printf("%c,",flat_data[i]);
-    } 
- 
-    printf("\n");
-    
-    //int data[49]={' ',hor,hor,hor,hor,ver,ver,ver,ver,ver,ver,
-    //               hor,-hor,hor,hor,hor,-ver,' ',ver,-ver,ver,ver,
-    //               hor,hor,hor,hor,hor,ver,ver,ver,-ver,ver,ver,
-    //               hor,' ',hor,hor,-hor,' ',ver,ver,ver,ver,ver,
-    //               hor,hor,hor,hor,hor};
-    //int is_square = 1;                
-    //change_grid(5,5,flat_data,FOREGROUND_RED,FOREGROUND_BLUE,BACKGROUND_RED,BACKGROUND_BLUE, is_square);//number of dots
-    //system("pause");
-    return 0;
-    
-} */

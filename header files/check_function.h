@@ -85,17 +85,3 @@ int check_squares(int i , int j , int n , int m , int data[n][m], int *turn){
     }
     return score ;
 }
-/*
-int main(){
-    int data[5][5] = {
-        {2,1,2,1,2},
-        {1,2,1,2,1},
-        {2,0,2,1,2},
-        {1,2,1,2,0},
-        {2,1,2,0,2}
-    };
-
-    //printf("%c\n",line_check(2));
-    printf("%d",check_squares(2 ,1,5,5,data));
-}
-*/

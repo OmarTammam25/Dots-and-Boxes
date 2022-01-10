@@ -30,25 +30,3 @@ void decode(int *i,int *j,int coor ){
 
     }
 }
-
-/* example for encoding and decoding 
-int main(){
-    int x,y,coor;
-    for (int i = 0; i < 10; i++)
-    {for (int j = 0; j < 10; j++)
-    {
-        coor=encode(i,j);
-        //printf("%d\n",);
-        decode(&x,&y,coor);
-        //if(i!=x||j!=y)
-        printf("%d %d\t%d\t%d %d\n",i,j,coor,x,y);
-
-    }
-    
-    }
-    
-    int i=9;
-    int j=11;
-    
-system("pause");
-}*/
