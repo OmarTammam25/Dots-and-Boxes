@@ -516,7 +516,7 @@ int main(){
                 setColor(player1.colorF);
                 printf("\n Time passed for player1: %d:%d", (int)player1.timeSpent/60, (int)player1.timeSpent%60);
                 setColor(player2.colorF);
-                printf("\t\t\t\t\tTime passed for player2: %d:%d", (int)player2.timeSpent/60, (int)player2.timeSpent%60);
+                printf("\t\t\t\t Time passed for player2: %d:%d", (int)player2.timeSpent/60, (int)player2.timeSpent%60);
                 setColorDefault();
             }
             
