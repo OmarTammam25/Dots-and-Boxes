@@ -1,3 +1,4 @@
+//  NOT WORKING NOW , THE WORKING FILE IN HEADERS FOLDER
 #include <stdio.h>
 
 // generate array which will hold the lines. dynamic array ;)
